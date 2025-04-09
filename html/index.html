@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Angelo Baffari</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      background: #1a1a1a;
+      color: #eaeaea;
+    }
+
+    nav {
+      width: 200px;
+      background: #2a2a2a;
+      border-right: 1px solid #444;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-transform: lowercase;
+    }
+
+    nav a {
+  color: #b8f2e6;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: normal;
+}
+
+nav a:hover {
+  color: #ffadad;
+  letter-spacing: 1px;
+  transform: translateX(5px);
+}
+
+    main {
+      flex-grow: 1;
+      padding: 40px;
+      background: #111;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      color: #fcd5ce;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1em;
+      color: #ccc;
+    }
+
+    .underline {
+      text-decoration: underline;
+      text-decoration-color: #ffb3c1;
+      text-decoration-thickness: 2px;
+    }
+
+    .blink {
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 50%, 100% {
+        opacity: 1;
+      }
+      25%, 75% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div style="color: #eaeaea; font-weight: bold; font-size: 1.2em;">ab</div>
+    <a href="art.html">art</a>
+    <a href="music.html">music</a>
+    <a href="films.html">films</a>
+    <a href="blog.html">blog</a>
+    <a href="misc.html">misc</a>
+  </nav>
+  <main>
+    <h1>Angelo Baffari</h1>
+    <p>un rincón <span class="underline">hecho con cariño</span>.</p>
+    <p class="blink">✦ en construcción ✦</p>
+  </main>
+</body>
+</html>
