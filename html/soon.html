@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Próximamente — Angelo Baffari</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      display: flex;
+      background: #1a1a1a;
+      color: #eaeaea;
+    }
+
+    nav {
+      width: 200px;
+      background: #2a2a2a;
+      border-right: 1px solid #444;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-transform: lowercase;
+    }
+
+    nav a {
+      color: #b8f2e6;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffadad;
+      letter-spacing: 1px;
+      transform: translateX(5px);
+    }
+
+    main {
+      flex-grow: 1;
+      padding: 40px;
+      background: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.2em;
+      color: #fcd5ce;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.1em;
+      color: #ccc;
+      max-width: 500px;
+    }
+
+    .list {
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    .list li {
+      margin: 10px 0;
+      font-size: 1.1em;
+      color: #b8f2e6;
+    }
+
+    .list li::before {
+      content: "🔧 ";
+    }
+
+    .heart {
+      margin-top: 40px;
+      font-size: 1.2em;
+      color: #ffadad;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" style="color: #eaeaea; font-weight: bold; font-size: 1.2em;">ab</a>
+    <a href="soon.html">art</a>
+    <a href="music.html">music</a>
+    <a href="soon.html">films</a>
+    <a href="soon.html">blog</a>
+    <a href="soon.html">photography</a>
+  </nav>
+
+  <main>
+    <h1>secciones en construcción</h1>
+    <p>estamos trabajando para habilitar todos los rincones de este sitio. pronto vas a poder ver más arte, fotos, textos y películas :)</p>
+
+    <ul class="list">
+      <li>Photography</li>
+      <li>Films</li>
+      <li>Blog</li>
+      <li>Art</li>
+    </ul>
+
+    <p class="heart">gracias por tu paciencia ♡</p>
+  </main>
+</body>
+</html>
