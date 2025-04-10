@@ -14,21 +14,24 @@
     body {
       font-family: 'IBM Plex Mono', monospace;
       display: flex;
+      flex-direction: row;
       background: linear-gradient(to bottom, #0f0f0f, #1a1a1a);
       color: #eaeaea;
       min-height: 100vh;
-      background-image: url('img/texture.png'); /* opcional textura */
+      background-image: url('img/texture.png');
       background-blend-mode: overlay;
     }
 
     nav {
-      width: 220px;
+      width: 200px;
+      height: 100vh;
       background: #1e1e1e;
       border-right: 1px solid #444;
       padding: 30px 20px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 2rem;
+      align-items: flex-start;
       text-transform: lowercase;
       letter-spacing: 0.5px;
     }
@@ -37,6 +40,8 @@
       color: #fff0f3;
       font-size: 1.6em;
       font-weight: bold;
+      margin-bottom: 30px;
+      white-space: nowrap;
     }
 
     nav a {
@@ -45,13 +50,11 @@
       cursor: pointer;
       transition: all 0.3s ease;
       white-space: nowrap;
-      min-width: 0;
-      flex-shrink: 1;
     }
 
     nav a:hover {
       color: #ffc6c6;
-      transform: translateX(5px);
+      transform: translateX(4px);
     }
 
     main {
@@ -111,7 +114,6 @@
       transform: scale(1.07);
     }
 
-    /* vela */
     .vela {
       position: absolute;
       bottom: 30px;
@@ -158,18 +160,24 @@
 
       nav {
         width: 100%;
+        height: auto;
         border-right: none;
         border-bottom: 1px solid #444;
         flex-direction: row;
         justify-content: space-around;
+        align-items: center;
         padding: 15px 10px;
         overflow-x: auto;
-        flex-wrap: wrap;
         gap: 10px;
+      }
+
+      .logo-ab {
+        margin-bottom: 0;
       }
 
       main {
         padding: 20px;
+        width: 100%;
       }
 
       .galeria {
@@ -194,8 +202,8 @@
     <a href="music.html">melodías</a>
     <a href="">luces</a>
     <a href="photos.html">visiones</a> 
-    <a href="">artes</a>
-    <a href="">manifiesto</a>
+    <a href="#">artes</a>
+    <a href="#">manifiesto</a>
   </nav>
   <main>
     <h1>Angelo Baffari</h1>
