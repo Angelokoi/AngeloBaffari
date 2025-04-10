@@ -33,11 +33,20 @@
       letter-spacing: 0.5px;
     }
 
+    .logo-ab {
+      color: #fff0f3;
+      font-size: 1.6em;
+      font-weight: bold;
+    }
+
     nav a {
       color: #d8e2dc;
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
+      white-space: nowrap;
+      min-width: 0;
+      flex-shrink: 1;
     }
 
     nav a:hover {
@@ -64,6 +73,15 @@
       color: #ccc;
       max-width: 600px;
       line-height: 1.6;
+    }
+
+    .blink {
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% {opacity: 1;}
+      50% {opacity: 0;}
     }
 
     .underline {
@@ -145,6 +163,9 @@
         flex-direction: row;
         justify-content: space-around;
         padding: 15px 10px;
+        overflow-x: auto;
+        flex-wrap: wrap;
+        gap: 10px;
       }
 
       main {
@@ -169,16 +190,16 @@
 </head>
 <body>
   <nav>
-    <div style="color: #fff0f3; font-size: 1.3em; font-weight: bold;">✝︎ ab</div>
+    <div class="logo-ab">✝︎ ab</div>
     <a href="music.html">melodías</a>
-    <a href="soon.html">luces</a>
-    <a href="soon.html">visiones</a> 
-    <a href="soon.html">artes</a>
-    <a href="soon.html">manifiesto</a>
+    <a href="">luces</a>
+    <a href="photos.html">visiones</a> 
+    <a href="">artes</a>
+    <a href="">manifiesto</a>
   </nav>
   <main>
     <h1>Angelo Baffari</h1>
-    <p><span class="underline">"arte es amor"</span>
+    <p><span class="underline blink">rincón para sentir</span></p>
     <div class="galeria">
       <img src="img/nishikigoi.jpg" alt="nishikigoi" />
       <img src="img/nishikigoi.jpg" alt="nishikigoi" />
