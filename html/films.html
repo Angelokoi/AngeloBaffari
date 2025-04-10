@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Luces — Angelo Baffari</title>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'IBM Plex Mono', monospace;
+      background: url('img/bgfilms.jpg') no-repeat center center fixed;
+      background-size: cover;
+      backdrop-filter: blur(6px);
+      color: #eaeaea;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      padding: 15px 0;
+      background: rgba(30, 30, 30, 0.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #444;
+      z-index: 10;
+    }
+
+    nav a {
+      color: #b8f2e6;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #ffadad;
+    }
+
+    .logo-ab {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #eaeaea;
+    }
+
+    main {
+      padding: 60px 40px;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      color: #fcd5ce;
+    }
+
+    p.subtitle {
+      font-size: 1.2em;
+      color: #ccc;
+      margin-bottom: 40px;
+    }
+
+    .film-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+    }
+
+    .film {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid #444;
+      cursor: pointer;
+      transition: transform 0.4s ease;
+    }
+
+    .film:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 12px rgba(255, 173, 173, 0.2);
+    }
+
+    .film img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.7);
+      transition: filter 0.3s ease;
+    }
+
+    .film:hover img {
+      filter: brightness(1);
+    }
+
+    .film-title {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      color: #fff;
+      font-size: 1.5em;
+      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      main {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html" class="logo-ab">✝︎ ab</a>
+    <a href="music.html">melodías</a>
+    <a href="films.html" style="color: #ffadad;">luces</a>
+    <a href="photos.html">visiones</a> 
+    <a href="">artes</a>
+    <a href="">manifiesto</a>
+  </nav>
+
+  <main>
+    <h1>luces</h1>
+    <p class="subtitle">Fragmentos de tiempo que respiran, poemas en movimiento, ecos de lo invisible 🎥</p>
+
+    <div class="film-grid">
+      <a href="https://youtu.be/uKYo0y_H69w" target="_blank" class="film">
+        <img src="films/somnium.jpg" alt="Somnium" />
+        <div class="film-title">Somnium</div>
+      </a>
+
+      <a href="https://youtu.be/dUC4hEDs-302" target="_blank" class="film">
+        <img src="films/sincopae.jpg" alt="Sincopæ" />
+        <div class="film-title">Sincopæ</div>
+      </a>
+
+      <a href="https://youtu.be/PMLjq0Arm_o" target="_blank" class="film">
+        <img src="films/cqp.jpg" alt="Cosas que pasan" />
+        <div class="film-title">Cosas que pasan</div>
+      </a>
+    </div>
+  </main>
+</body>
+</html>
