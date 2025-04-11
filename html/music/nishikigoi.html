@@ -11,14 +11,14 @@
     }
 
     body {
-  margin: 0;
-  font-family: 'IBM Plex Mono', monospace;
-  background: #1a1a1a;
-  color: #eaeaea;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-}
+      margin: 0;
+      font-family: 'IBM Plex Mono', monospace;
+      background: #1a1a1a;
+      color: #eaeaea;
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
 
     .container {
       display: flex;
@@ -69,11 +69,11 @@
     }
 
     .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
-      margin-top: 30px;
-    }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
 
     .item {
       background: #222;
@@ -91,16 +91,17 @@
     }
 
     .item img {
-      width: 100%;
-      border-radius: 6px;
-      object-fit: cover;
-    }
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
 
     .item a {
       display: block;
-      margin-top: 10px;
-      text-decoration: none;
       color: #b8f2e6;
+      text-decoration: none;
+      margin-top: 10px;
       font-weight: bold;
     }
 
@@ -119,6 +120,7 @@
         justify-content: space-around;
         border-right: none;
         border-bottom: 1px solid #444;
+        padding: 20px;
       }
 
       main {
@@ -136,22 +138,22 @@
 
     <main>
       <h1>nishikigoi</h1>
-      <p>una banda alternativa que nada en aguas profundas: post-rock, math, indie japonés, amor y distorsión. 🐟</p>
+      <p>🐟</p>
 
       <div class="grid">
         <div class="item">
-          <img src="../img/nishikigoi-portada.jpg" alt="Nishikigoi portada">
-          <a href="https://open.spotify.com/artist/..." target="_blank">escuchar en Spotify</a>
+          <img src="../img/nishikigoi.jpg" alt="Nishikigoi portada">
+          <a href="https://www.instagram.com/nishikigoi.band/" target="_blank">Encontranos en instagram!</a>
         </div>
 
         <div class="item">
-          <img src="../img/nishikigoi-banda.jpg" alt="Foto de la banda">
-          <a href="https://www.instagram.com/nishikigoi.band/" target="_blank">seguinos en Instagram</a>
+          <img src="../img/nishikigoi.jpg" alt="Foto de la banda">
+          <a href="https://youtu.be/kyLJaJKxOP4" target="_blank">Escuchá nuestro primer cover</a>
         </div>
 
         <div class="item">
-          <img src="../img/nishikigoi-en-vivo.jpg" alt="Nishikigoi en vivo">
-          <a href="#">ver próximos shows</a>
+          <img src="../img/nishikigoi.jpg" alt="Nishikigoi en vivo">
+          <a href="#">Próximamente...</a>
         </div>
       </div>
     </main>

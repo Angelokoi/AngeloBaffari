@@ -6,6 +6,9 @@
   <title>✝︎ Angelo Baffari ✝︎</title>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+        * {
+      box-sizing: border-box;
+    }
     html, body {
       height: 100%;
       margin: 0;
@@ -125,6 +128,55 @@
       box-shadow: 0 0 15px rgba(255, 195, 113, 0.7);
       animation: flame 1s infinite ease-in-out;
     }
+ 
+    .item {
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .item:hover {
+      transform: scale(1.05);
+      background: #2a2a2a;
+      box-shadow: 0 0 10px rgba(255, 173, 173, 0.2);
+    }
+
+    .item img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.item a {
+      display: block;
+      color: #b8f2e6;
+      text-decoration: none;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+
+    .item a:hover {
+      color: #ffadad;
+    }
+
+    .item span {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+      color: #b8f2e6;
+    }
+
+  .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
 
     .vela::after {
       content: "";
@@ -208,11 +260,24 @@
   <main>
     <h1>Angelo Baffari</h1>
     <p><span class="underline blink">rincón para sentir</span></p>
-    <div class="galeria">
-      <img src="img/nishikigoi.jpg" alt="nishikigoi" />
-      <img src="img/nishikigoi.jpg" alt="nishikigoi" />
-      <img src="img/nishikigoi.jpg" alt="nishikigoi" />
-    </div>
+    <div class="grid">
+      <a href="https://www.instagram.com/angelo.koi/" target="_blank">
+        <div class="item">
+          <img src="img/yo1.jpg" alt="Mi Instagram" />
+          <span>Mi Instagram</span>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/@angelo.ko1" target="_blank">
+        <div class="item">
+          <img src="img/yo2.jpg" alt="Mis videos" />
+          <span>Mis videos</span>
+        </div>
+      </a>
+      <a href="https://soundcloud.com/angelokoi" target="_blank">
+        <div class="item">
+          <img src="img/yo3.jpg" alt="Mi música" />
+          <span>Mi música</span>
+        </div>
     <div class="vela"></div>
   </main>
 </body>
