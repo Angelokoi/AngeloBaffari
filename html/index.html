@@ -73,6 +73,12 @@
     .cruz:nth-child(4) { bottom: 40px; right: 50px; animation-delay: 3s; }
     @keyframes flotar { 0%,100%{transform:translateY(0) rotate(0deg);opacity:0.7;} 50%{transform:translateY(-12px) rotate(6deg);opacity:1;} }
     @media (max-width: 768px) { nav { flex-wrap: wrap; gap:10px; } main { padding:30px 20px; } }
+    {
+  img {
+    max-width: 90vw !important;
+    max-height: 70vh !important;
+  }
+}
   </style>
 </head>
 <body>
@@ -148,7 +154,8 @@ albumsDOM.forEach(album => {
     overlay.style.top = 0;
     overlay.style.left = 0;
     overlay.style.width = '100vw';
-    overlay.style.height = '100vh';
+    overlay.style.height = '100dvh'; // usa dynamic viewport height
+    overlay.style.overflow = 'hidden';
     overlay.style.background = 'rgba(10,10,10,0.96)';
     overlay.style.display = 'flex';
     overlay.style.flexDirection = 'column';
@@ -206,6 +213,31 @@ albumsDOM.forEach(album => {
       imgEl.style.opacity = '0';
       setTimeout(() => { imgEl.src = imgs[index]; imgEl.style.opacity = '1'; }, 200);
     };
+
+     // Swipe para móviles
+    let startX = 0;
+    let endX = 0;
+
+    imgEl.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  });
+
+    imgEl.addEventListener('touchmove', (e) => {
+    endX = e.touches[0].clientX;
+  });
+
+    imgEl.addEventListener('touchend', () => {
+    const diff = endX - startX;
+    if (Math.abs(diff) > 50) { // sensibilidad
+      if (diff > 0) {
+        // swipe derecha -> imagen anterior
+        prev.onclick();
+      } else {
+        // swipe izquierda -> siguiente imagen
+        next.onclick();
+    }
+  }
+});   
 
     overlay.appendChild(prev);
     overlay.appendChild(next);
