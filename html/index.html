@@ -7,12 +7,7 @@
   <link rel="icon" type="image/png" href="img/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'IBM Plex Mono', monospace;
       background: url('img/bgphoto.jpg') no-repeat center center fixed;
@@ -24,7 +19,6 @@
       flex-direction: column;
       overflow-x: hidden;
     }
-
     nav {
       position: sticky;
       top: 0;
@@ -38,46 +32,13 @@
       border-bottom: 1px solid #444;
       z-index: 10;
     }
-
-    nav a {
-      color: #b8f2e6;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s ease;
-    }
-
-    nav a:hover {
-      color: #ffadad;
-    }
-
-    .logo-ab {
-      font-size: 1.3em;
-      font-weight: bold;
-      color: #eaeaea;
-    }
-
-    main {
-      padding: 60px 40px;
-    }
-
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      color: #fcd5ce;
-    }
-
-    p.subtitle {
-      font-size: 1.2em;
-      color: #ccc;
-      margin-bottom: 40px;
-    }
-
-    .album-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 40px;
-    }
-
+    nav a { color: #b8f2e6; text-decoration: none; font-weight: 500; transition: 0.3s ease; }
+    nav a:hover { color: #ffadad; }
+    .logo-ab { font-size: 1.3em; font-weight: bold; color: #eaeaea; }
+    main { padding: 60px 40px; }
+    h1 { font-size: 2.5em; margin-bottom: 10px; color: #fcd5ce; }
+    p.subtitle { font-size: 1.2em; color: #ccc; margin-bottom: 40px; }
+    .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
     .album {
       position: relative;
       overflow: hidden;
@@ -86,33 +47,17 @@
       cursor: pointer;
       transition: transform 0.4s ease;
     }
-
-    .album:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 12px rgba(255, 173, 173, 0.2);
-    }
-
-    .album img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.7);
-      transition: filter 0.3s ease;
-    }
-
-    .album:hover img {
-      filter: brightness(1);
-    }
-
+    .album:hover { transform: scale(1.03); box-shadow: 0 0 12px rgba(255, 173, 173, 0.2); }
+    .album img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); transition: filter 0.3s ease; }
+    .album:hover img { filter: brightness(1); }
     .album-title {
       position: absolute;
       bottom: 20px;
       left: 20px;
       color: #fff;
       font-size: 1.5em;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
     }
-
     .cruz {
       position: fixed;
       font-size: 1.5em;
@@ -122,31 +67,16 @@
       z-index: 5;
       pointer-events: none;
     }
-
     .cruz:nth-child(1) { top: 70px; left: 25px; animation-delay: 0s; }
     .cruz:nth-child(2) { top: 80px; right: 40px; animation-delay: 1s; }
     .cruz:nth-child(3) { bottom: 50px; left: 60px; animation-delay: 2s; }
     .cruz:nth-child(4) { bottom: 40px; right: 50px; animation-delay: 3s; }
-
-    @keyframes flotar {
-      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
-      50% { transform: translateY(-12px) rotate(6deg); opacity: 1; }
-    }
-
-    @media (max-width: 768px) {
-      nav {
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      main {
-        padding: 30px 20px;
-      }
-    }
+    @keyframes flotar { 0%,100%{transform:translateY(0) rotate(0deg);opacity:0.7;} 50%{transform:translateY(-12px) rotate(6deg);opacity:1;} }
+    @media (max-width: 768px) { nav { flex-wrap: wrap; gap:10px; } main { padding:30px 20px; } }
   </style>
 </head>
 <body>
-  
+
   <div class="cruz">✝︎</div>
   <div class="cruz">✝︎</div>
   <div class="cruz">✝︎</div>
@@ -158,7 +88,7 @@
     <a href="music.html">melodías</a>
     <a href="films.html">luces</a> 
     <a href="#">artes</a>
-    <a href="manifiesto.html" >manifiesto</a>
+    <a href="manifiesto.html">manifiesto</a>
   </nav>
 
   <main>
@@ -167,147 +97,52 @@
 
     <div class="album-grid">
       <div class="album" data-album="gorgojo">
-        <img src="visiones/gorgojo/_ANG0113.jpg" alt="Gorgojo (10-10-25)" />
+        <img src="visiones/gorgojo/_ANG0113.jpg" alt="Gorgojo (10-10-25)">
         <div class="album-title">Gorgojo (10-10-25)</div>
       </div>
-      
-    <div class="album-grid">
       <div class="album" data-album="puja">
-        <img src="visiones/puja/_ANG9246.jpg" alt="puja (20-9-25)" />
+        <img src="visiones/puja/_ANG9246.jpg" alt="puja (20-9-25)">
         <div class="album-title">Puja (20-9-25)</div>
       </div>
-
-      <div class="album-grid">
       <div class="album" data-album="aqui">
-        <img src="visiones/aqui/_ANG9789.jpg" alt="aquí (2025)" />
+        <img src="visiones/aqui/_ANG9789.jpg" alt="aquí (2025)">
         <div class="album-title">ya estuve acá...</div>
       </div>
-      
-
-    <div class="album-grid">
       <div class="album" data-album="nota">
-        <img src="visiones/El nota/img/35.jpg" alt="El Nota en vivo" />
+        <img src="visiones/El nota/img/35.jpg" alt="El Nota en vivo">
         <div class="album-title">El Nota en vivo</div>
       </div>
-      
       <div class="album" data-album="Doble Seda">
-        <img src="visiones/Doble seda/img/_ANG3591.jpg" alt="Doble Seda" />
+        <img src="visiones/Doble seda/img/_ANG3591.jpg" alt="Doble Seda">
         <div class="album-title">Doble Seda</div>
       </div>
-
       <div class="album" data-album="la sombra">
-        <img src="visiones/Naturaleza/img/_ANG1777.jpg" alt="La sombra de tus ramas" />
+        <img src="visiones/Naturaleza/img/_ANG1777.jpg" alt="La sombra de tus ramas">
         <div class="album-title">La sombra de tus ramas</div>
       </div>
-
-
     </div>
   </main>
 
 <script>
 const albums = {
-  "nota": [
-    "visiones/El nota/img/35.jpg",
-    "visiones/El nota/img/1.jpg",
-    "visiones/El nota/img/2.jpg",
-    "visiones/El nota/img/3.jpg",
-    "visiones/El nota/img/4.jpg",
-    "visiones/El nota/img/8.jpg",
-    "visiones/El nota/img/9.jpg",
-    "visiones/El nota/img/12.jpg",
-    "visiones/El nota/img/13.jpg",
-    "visiones/El nota/img/15.jpg",
-    "visiones/El nota/img/17.jpg",
-    "visiones/El nota/img/21.jpg",
-    "visiones/El nota/img/24.jpg",
-    "visiones/El nota/img/27.jpg",
-    "visiones/El nota/img/31.jpg",
-    "visiones/El nota/img/33.jpg",
-    "visiones/El nota/img/41.jpg",
-  ],
-   "Doble Seda": [
-    "visiones/Doble seda/img/_ANG3591.jpg",
-    "visiones/Doble seda/img/_ANG3487.jpg",
-    "visiones/Doble seda/img/_ANG3502.jpg",  
-    "visiones/Doble seda/img/_ANG3504.jpg",
-    "visiones/Doble seda/img/_ANG3506.jpg",
-    "visiones/Doble seda/img/_ANG3513.jpg",
-    "visiones/Doble seda/img/_ANG3509.jpg",
-    "visiones/Doble seda/img/_ANG3540.jpg",
-    "visiones/Doble seda/img/_ANG3545.jpg",
-    "visiones/Doble seda/img/_ANG3553.jpg",
-    "visiones/Doble seda/img/_ANG3592.jpg",
-    
-
-  ],
-  "la sombra": [
-    "visiones/Naturaleza/img/_ANG1777.jpg",
-    "visiones/Naturaleza/img/_ANG6916.jpg",
-    "visiones/Naturaleza/img/_ANG7016.jpg"
-  ],
-  "gorgojo": [
-    "visiones/gorgojo/_ANG0113.jpg",
-    "visiones/gorgojo/_ANG0067.jpg",
-    "visiones/gorgojo/_ANG0128.jpg",
-    "visiones/gorgojo/_ANG0113.jpg",
-    "visiones/gorgojo/_ANG09926.jpg", 
-    "visiones/gorgojo/_ANG0135.jpg",
-    "visiones/gorgojo/_ANG0113.jpg",
-    "visiones/gorgojo/_ANG0149.jpg",
-    "visiones/gorgojo/_ANG0196.jpg",
-    "visiones/gorgojo/_ANG0113.jpg",
-    "visiones/gorgojo/_ANG0329.jpg",
-    "visiones/gorgojo/_ANG0216.jpg",
-    "visiones/gorgojo/_ANG0376.jpg",
-    "visiones/gorgojo/_ANG0376.jpg",
-    "visiones/gorgojo/_ANG0421.jpg",
-
-  ],
-  "aqui": [
-    "visiones/aqui/_ANG9789.jpg",
-    "visiones/aqui/_ANG9802.jpg",
-    "visiones/aqui/_ANG9805.jpg",
-    "visiones/aqui/_ANG9806.jpg",
-    "visiones/aqui/_ANG9811.jpg",
-    "visiones/aqui/_ANG9826.jpg",
-    "visiones/aqui/_ANG9833.jpg",
-    "visiones/aqui/_ANG9838.jpg",
-    "visiones/aqui/_ANG9858.jpg",
-    "visiones/aqui/_ANG9864.jpg",
-    "visiones/aqui/_ANG9876.jpg",
-    "visiones/aqui/_ANG9887.jpg",
-    "visiones/aqui/_ANG9892.jpg",  
-  ],
-  "puja": [
-    "visiones/puja/_ANG9246.jpg",
-    "visiones/puja/_ANG8832.jpg",
-    "visiones/puja/_ANG8975.jpg",
-    "visiones/puja/_ANG8983.jpg",
-    "visiones/puja/_ANG9260.jpg",
-    "visiones/puja/_ANG9555.jpg",
-    "visiones/puja/_ANG9095.jpg",
-    "visiones/puja/_ANG9572.jpg",
-    "visiones/puja/_ANG9203.jpg",
-    "visiones/puja/_ANG9077.jpg",
-    "visiones/puja/_ANG9273.jpg",
-    "visiones/puja/_ANG8934.jpg",
-    "visiones/puja/_ANG8835.jpg",
-    "visiones/puja/_ANG9568.jpg",
-  ]
- 
+  "nota":[ "visiones/El nota/img/35.jpg", "visiones/El nota/img/1.jpg", "visiones/El nota/img/2.jpg", "visiones/El nota/img/3.jpg", "visiones/El nota/img/4.jpg", "visiones/El nota/img/8.jpg", "visiones/El nota/img/9.jpg", "visiones/El nota/img/12.jpg", "visiones/El nota/img/13.jpg", "visiones/El nota/img/15.jpg", "visiones/El nota/img/17.jpg", "visiones/El nota/img/21.jpg", "visiones/El nota/img/24.jpg", "visiones/El nota/img/27.jpg", "visiones/El nota/img/31.jpg", "visiones/El nota/img/33.jpg", "visiones/El nota/img/41.jpg" ],
+  "Doble Seda":[ "visiones/Doble seda/img/_ANG3591.jpg", "visiones/Doble seda/img/_ANG3487.jpg", "visiones/Doble seda/img/_ANG3502.jpg", "visiones/Doble seda/img/_ANG3504.jpg", "visiones/Doble seda/img/_ANG3506.jpg", "visiones/Doble seda/img/_ANG3513.jpg", "visiones/Doble seda/img/_ANG3509.jpg", "visiones/Doble seda/img/_ANG3540.jpg", "visiones/Doble seda/img/_ANG3545.jpg", "visiones/Doble seda/img/_ANG3553.jpg", "visiones/Doble seda/img/_ANG3592.jpg" ],
+  "la sombra":[ "visiones/Naturaleza/img/_ANG1777.jpg","visiones/Naturaleza/img/_ANG6916.jpg","visiones/Naturaleza/img/_ANG7016.jpg" ],
+  "gorgojo":[ "visiones/gorgojo/_ANG0113.jpg","visiones/gorgojo/_ANG0067.jpg","visiones/gorgojo/_ANG0128.jpg","visiones/gorgojo/_ANG0113.jpg","visiones/gorgojo/_ANG09926.jpg","visiones/gorgojo/_ANG0135.jpg","visiones/gorgojo/_ANG0113.jpg","visiones/gorgojo/_ANG0149.jpg","visiones/gorgojo/_ANG0196.jpg","visiones/gorgojo/_ANG0113.jpg","visiones/gorgojo/_ANG0329.jpg","visiones/gorgojo/_ANG0216.jpg","visiones/gorgojo/_ANG0376.jpg","visiones/gorgojo/_ANG0376.jpg","visiones/gorgojo/_ANG0421.jpg" ],
+  "aqui":[ "visiones/aqui/_ANG9789.jpg","visiones/aqui/_ANG9802.jpg","visiones/aqui/_ANG9805.jpg","visiones/aqui/_ANG9806.jpg","visiones/aqui/_ANG9811.jpg","visiones/aqui/_ANG9826.jpg","visiones/aqui/_ANG9833.jpg","visiones/aqui/_ANG9838.jpg","visiones/aqui/_ANG9858.jpg","visiones/aqui/_ANG9864.jpg","visiones/aqui/_ANG9876.jpg","visiones/aqui/_ANG9887.jpg","visiones/aqui/_ANG9892.jpg" ],
+  "puja":[ "visiones/puja/_ANG9246.jpg","visiones/puja/_ANG8832.jpg","visiones/puja/_ANG8975.jpg","visiones/puja/_ANG8983.jpg","visiones/puja/_ANG9260.jpg","visiones/puja/_ANG9555.jpg","visiones/puja/_ANG9095.jpg","visiones/puja/_ANG9572.jpg","visiones/puja/_ANG9203.jpg","visiones/puja/_ANG9077.jpg","visiones/puja/_ANG9273.jpg","visiones/puja/_ANG8934.jpg","visiones/puja/_ANG8835.jpg","visiones/puja/_ANG9568.jpg" ]
 };
 
 const albumsDOM = document.querySelectorAll('.album');
 
 albumsDOM.forEach(album => {
-  album.addEventListener('click', () => {
+  album.addEventListener('pointerup', () => {
     const key = album.dataset.album;
     const imgs = albums[key];
     if (!imgs) return;
 
     let index = 0;
 
-    // overlay
     const overlay = document.createElement('div');
     overlay.style.position = 'fixed';
     overlay.style.top = 0;
@@ -316,12 +151,11 @@ albumsDOM.forEach(album => {
     overlay.style.height = '100vh';
     overlay.style.background = 'rgba(10,10,10,0.96)';
     overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
     overlay.style.justifyContent = 'center';
     overlay.style.alignItems = 'center';
     overlay.style.zIndex = '1000';
-    overlay.style.flexDirection = 'column';
 
-    // Imagen grande
     const imgEl = document.createElement('img');
     imgEl.src = imgs[index];
     imgEl.style.maxWidth = '80vw';
@@ -332,19 +166,17 @@ albumsDOM.forEach(album => {
     imgEl.style.transition = 'opacity 0.3s ease';
     overlay.appendChild(imgEl);
 
-    // Botón cerrar
     const closeBtn = document.createElement('div');
     closeBtn.textContent = '✝︎ cerrar ✝︎';
     closeBtn.style.position = 'fixed';
     closeBtn.style.top = '20px';
-    closeBtn.style.right = '30px';|||
+    closeBtn.style.right = '30px';
     closeBtn.style.color = '#ffc6c6';
     closeBtn.style.cursor = 'pointer';
     closeBtn.style.fontSize = '1.2em';
     closeBtn.onclick = () => overlay.remove();
     overlay.appendChild(closeBtn);
 
-    // Flechas
     const prev = document.createElement('div');
     const next = document.createElement('div');
     [prev, next].forEach(btn => {
@@ -367,27 +199,18 @@ albumsDOM.forEach(album => {
     prev.onclick = () => {
       index = (index - 1 + imgs.length) % imgs.length;
       imgEl.style.opacity = '0';
-      setTimeout(() => {
-        imgEl.src = imgs[index];
-        imgEl.style.opacity = '1';
-      }, 200);
+      setTimeout(() => { imgEl.src = imgs[index]; imgEl.style.opacity = '1'; }, 200);
     };
-
     next.onclick = () => {
       index = (index + 1) % imgs.length;
       imgEl.style.opacity = '0';
-      setTimeout(() => {
-        imgEl.src = imgs[index];
-        imgEl.style.opacity = '1';
-      }, 200);
+      setTimeout(() => { imgEl.src = imgs[index]; imgEl.style.opacity = '1'; }, 200);
     };
 
     overlay.appendChild(prev);
     overlay.appendChild(next);
-
     document.body.appendChild(overlay);
 
-    // Navegación con teclado
     document.addEventListener('keydown', (e) => {
       if (!document.body.contains(overlay)) return;
       if (e.key === 'ArrowRight') next.onclick();
