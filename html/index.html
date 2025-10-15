@@ -144,12 +144,15 @@ document.querySelectorAll('.album').forEach(album => {
     if (!imgs) return;
 
     let index = 0;
+
+    // Lleva la página al tope para evitar que el overlay quede fuera de vista
+    window.scrollTo({ top: 0, behavior: "instant" });
     document.body.style.overflow = 'hidden';
 
     const overlay = document.createElement('div');
     overlay.style.position = 'fixed';
-    overlay.style.top = 0;
-    overlay.style.left = 0;
+    overlay.style.top = '0';
+    overlay.style.left = '0';
     overlay.style.width = '100vw';
     overlay.style.height = '100dvh';
     overlay.style.display = 'flex';
@@ -189,8 +192,7 @@ document.querySelectorAll('.album').forEach(album => {
     mobileHint.style.color = '#ccc';
     mobileHint.style.fontSize = '1em';
     mobileHint.style.opacity = '0.7';
-    mobileHint.style.display = 'none';
-    if (window.innerWidth < 768) mobileHint.style.display = 'block';
+    mobileHint.style.display = window.innerWidth < 768 ? 'block' : 'none';
     overlay.appendChild(mobileHint);
 
     const prev = document.createElement('div');
@@ -206,6 +208,7 @@ document.querySelectorAll('.album').forEach(album => {
       btn.style.color = '#ffc6c6';
       btn.style.userSelect = 'none';
       btn.style.transition = 'opacity 0.2s ease';
+      btn.style.zIndex = '1001';
     });
     prev.style.left = '20px';
     next.style.right = '20px';
@@ -213,23 +216,28 @@ document.querySelectorAll('.album').forEach(album => {
 
     document.body.appendChild(overlay);
 
-    // fade in
+    // Fade in animado
     setTimeout(() => {
       overlay.style.opacity = '1';
       imgEl.style.opacity = '1';
       imgEl.style.filter = 'blur(0)';
     }, 50);
 
-    closeBtn.onclick = () => {
+    const closeOverlay = () => {
       overlay.style.opacity = '0';
       imgEl.style.filter = 'blur(5px)';
       imgEl.style.opacity = '0';
       setTimeout(() => {
         overlay.remove();
         document.body.style.overflow = '';
+        history.back(); // volver al estado anterior del historial
       }, 400);
     };
 
+    // Botón cerrar
+    closeBtn.onclick = closeOverlay;
+
+    // Flechas
     prev.onclick = () => { index = (index - 1 + imgs.length) % imgs.length; imgEl.src = imgs[index]; };
     next.onclick = () => { index = (index + 1) % imgs.length; imgEl.src = imgs[index]; };
 
@@ -247,8 +255,14 @@ document.querySelectorAll('.album').forEach(album => {
       if (!document.body.contains(overlay)) return;
       if (e.key === 'ArrowRight') next.onclick();
       if (e.key === 'ArrowLeft') prev.onclick();
-      if (e.key === 'Escape') closeBtn.onclick();
+      if (e.key === 'Escape') closeOverlay();
     });
+
+    // Botón físico "volver" en móviles
+    history.pushState({ overlay: true }, '');
+    window.onpopstate = event => {
+      if (event.state && event.state.overlay) closeOverlay();
+    };
   });
 });
 </script>
