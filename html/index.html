@@ -37,7 +37,7 @@
     .logo-ab { font-size: 1.3em; font-weight: bold; color: #eaeaea; }
     main { padding: 60px 40px; }
     h1 { font-size: 2.5em; margin-bottom: 10px; color: #fcd5ce; }
-    p.subtitle { font-size: 1.2em; color: #ccc; margin-bottom: 40px; }
+    p.subtitle { font-size: 1.2em; color: #ccc; margin-bottom: 10px; }
     .album-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
     .album {
       position: relative;
@@ -97,7 +97,7 @@
   <main>
     <h1>visiones</h1>
     <p class="subtitle">exploración visual de lo que me rodea. 📷</p>
-    <p class="subtitle">(deslizar en dispositivos móviles)</p>
+    <p class="subtitle">(deslizar en dispositivos móviles ⟷)</p>
 
     <div class="album-grid">
       <div class="album" data-album="gorgojo">
@@ -129,23 +129,22 @@
 
 <script>
 const albums = {
-  "nota":[ "visiones/El nota/img/35.jpg", "visiones/El nota/img/1.jpg", "visiones/El nota/img/2.jpg", "visiones/El nota/img/3.jpg", "visiones/El nota/img/4.jpg", "visiones/El nota/img/8.jpg", "visiones/El nota/img/9.jpg", "visiones/El nota/img/12.jpg", "visiones/El nota/img/13.jpg", "visiones/El nota/img/15.jpg", "visiones/El nota/img/17.jpg", "visiones/El nota/img/21.jpg", "visiones/El nota/img/24.jpg", "visiones/El nota/img/27.jpg", "visiones/El nota/img/31.jpg", "visiones/El nota/img/33.jpg", "visiones/El nota/img/41.jpg" ],
-  "Doble Seda":[ "visiones/Doble seda/img/_ANG3591.jpg", "visiones/Doble seda/img/_ANG3487.jpg", "visiones/Doble seda/img/_ANG3502.jpg", "visiones/Doble seda/img/_ANG3504.jpg", "visiones/Doble seda/img/_ANG3506.jpg", "visiones/Doble seda/img/_ANG3513.jpg", "visiones/Doble seda/img/_ANG3509.jpg", "visiones/Doble seda/img/_ANG3540.jpg", "visiones/Doble seda/img/_ANG3545.jpg", "visiones/Doble seda/img/_ANG3553.jpg", "visiones/Doble seda/img/_ANG3592.jpg" ],
-  "la sombra":[ "visiones/Naturaleza/img/_ANG1777.jpg","visiones/Naturaleza/img/_ANG6916.jpg","visiones/Naturaleza/img/_ANG7016.jpg" ],
-  "gorgojo":[ "visiones/gorgojo/_ANG0113.jpg","visiones/gorgojo/_ANG0067.jpg","visiones/gorgojo/_ANG0128.jpg","visiones/gorgojo/_ANG9926.jpg","visiones/gorgojo/_ANG0135.jpg","visiones/gorgojo/_ANG0149.jpg","visiones/gorgojo/_ANG0196.jpg","visiones/gorgojo/_ANG0329.jpg","visiones/gorgojo/_ANG0216.jpg","visiones/gorgojo/_ANG0376.jpg","visiones/gorgojo/_ANG0421.jpg" ],
-  "aqui":[ "visiones/aqui/_ANG9789.jpg","visiones/aqui/_ANG9802.jpg","visiones/aqui/_ANG9805.jpg","visiones/aqui/_ANG9806.jpg","visiones/aqui/_ANG9811.jpg","visiones/aqui/_ANG9826.jpg","visiones/aqui/_ANG9833.jpg","visiones/aqui/_ANG9838.jpg","visiones/aqui/_ANG9858.jpg","visiones/aqui/_ANG9864.jpg","visiones/aqui/_ANG9876.jpg","visiones/aqui/_ANG9887.jpg","visiones/aqui/_ANG9892.jpg" ],
-  "puja":[ "visiones/puja/_ANG9246.jpg","visiones/puja/_ANG8832.jpg","visiones/puja/_ANG8975.jpg","visiones/puja/_ANG8983.jpg","visiones/puja/_ANG9260.jpg","visiones/puja/_ANG9555-2.jpg","visiones/puja/_ANG9095.jpg","visiones/puja/_ANG9572.jpg","visiones/puja/_ANG9203.jpg","visiones/puja/_ANG9077.jpg","visiones/puja/_ANG9273.jpg","visiones/puja/_ANG8934.jpg","visiones/puja/_ANG8835.jpg","visiones/puja/_ANG9568.jpg" ]
+  "nota":[ "visiones/El nota/img/35.jpg", "visiones/El nota/img/1.jpg", "visiones/El nota/img/2.jpg" ],
+  "Doble Seda":[ "visiones/Doble seda/img/_ANG3591.jpg", "visiones/Doble seda/img/_ANG3487.jpg" ],
+  "la sombra":[ "visiones/Naturaleza/img/_ANG1777.jpg","visiones/Naturaleza/img/_ANG6916.jpg" ],
+  "gorgojo":[ "visiones/gorgojo/_ANG0113.jpg","visiones/gorgojo/_ANG0067.jpg" ],
+  "aqui":[ "visiones/aqui/_ANG9789.jpg","visiones/aqui/_ANG9802.jpg" ],
+  "puja":[ "visiones/puja/_ANG9246.jpg","visiones/puja/_ANG8832.jpg" ]
 };
 
-const albumsDOM = document.querySelectorAll('.album');
-
-albumsDOM.forEach(album => {
+document.querySelectorAll('.album').forEach(album => {
   album.addEventListener('pointerup', () => {
     const key = album.dataset.album;
     const imgs = albums[key];
     if (!imgs) return;
 
     let index = 0;
+    document.body.style.overflow = 'hidden';
 
     const overlay = document.createElement('div');
     overlay.style.position = 'fixed';
@@ -153,36 +152,25 @@ albumsDOM.forEach(album => {
     overlay.style.left = 0;
     overlay.style.width = '100vw';
     overlay.style.height = '100dvh';
-    overlay.style.overflow = 'hidden';
-    overlay.style.background = 'rgba(10,10,10,0.96)';
     overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
     overlay.style.justifyContent = 'center';
     overlay.style.alignItems = 'center';
+    overlay.style.background = 'rgba(10,10,10,0.96)';
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.4s ease';
     overlay.style.zIndex = '1000';
-    document.body.appendChild(overlay);
-    setTimeout(() => {
-    overlay.style.opacity = '1';
-    imgEl.style.opacity = '1';
-    imgEl.style.filter = 'blur(0)';
-  }, 50); // espera mínima para que la transición se ejecute
-    document.body.style.overflow = 'hidden';
 
     const imgEl = document.createElement('img');
     imgEl.src = imgs[index];
-    imgEl.style.maxWidth = '80vw';
+    imgEl.style.maxWidth = '90vw';
     imgEl.style.maxHeight = '80vh';
     imgEl.style.objectFit = 'contain';
     imgEl.style.borderRadius = '10px';
-    overlay.appendChild(imgEl);
-
-    // Para fade del overlay
-    overlay.style.opacity = '0';
-    overlay.style.transition = 'opacity 0.3s ease';
-
-    // Para blur/fade de la imagen
-    imgEl.style.filter = 'blur(5px)';
+    imgEl.style.filter = 'blur(6px)';
     imgEl.style.opacity = '0';
-    imgEl.style.transition = 'opacity 0.3s ease, filter 0.3s ease';
+    imgEl.style.transition = 'opacity 0.4s ease, filter 0.4s ease';
+    overlay.appendChild(imgEl);
 
     const closeBtn = document.createElement('div');
     closeBtn.textContent = '✝︎ cerrar ✝︎';
@@ -192,20 +180,23 @@ albumsDOM.forEach(album => {
     closeBtn.style.color = '#ffc6c6';
     closeBtn.style.cursor = 'pointer';
     closeBtn.style.fontSize = '1.2em';
-    closeBtn.onclick = () => {
-      overlay.style.opacity = '0';
-    imgEl.style.filter = 'blur(5px)';
-    imgEl.style.opacity = '0';
-    setTimeout(() => {
-    overlay.remove();
-    document.body.style.overflow = '';  
-    }, 300); // coincide con la duración de la transición
-      document.body.style.overflow = '';
-    };
     overlay.appendChild(closeBtn);
+
+    const mobileHint = document.createElement('div');
+    mobileHint.textContent = '⟷ deslizar para cambiar ⟷';
+    mobileHint.style.position = 'absolute';
+    mobileHint.style.bottom = '25px';
+    mobileHint.style.color = '#ccc';
+    mobileHint.style.fontSize = '1em';
+    mobileHint.style.opacity = '0.7';
+    mobileHint.style.display = 'none';
+    if (window.innerWidth < 768) mobileHint.style.display = 'block';
+    overlay.appendChild(mobileHint);
 
     const prev = document.createElement('div');
     const next = document.createElement('div');
+    prev.textContent = '⟵';
+    next.textContent = '⟶';
     [prev, next].forEach(btn => {
       btn.style.position = 'fixed';
       btn.style.top = '50%';
@@ -215,41 +206,49 @@ albumsDOM.forEach(album => {
       btn.style.color = '#ffc6c6';
       btn.style.userSelect = 'none';
       btn.style.transition = 'opacity 0.2s ease';
-      btn.onmouseenter = () => btn.style.opacity = '0.7';
-      btn.onmouseleave = () => btn.style.opacity = '1';
     });
-    prev.textContent = '⟵';
-    next.textContent = '⟶';
-    prev.style.left = '40px';
-    next.style.right = '40px';
-    overlay.appendChild(prev);
-    overlay.appendChild(next);
+    prev.style.left = '20px';
+    next.style.right = '20px';
+    overlay.append(prev, next);
 
-    prev.onclick = () => { index = (index-1+imgs.length)%imgs.length; imgEl.src = imgs[index]; }
-    next.onclick = () => { index = (index+1)%imgs.length; imgEl.src = imgs[index]; }
+    document.body.appendChild(overlay);
 
-    let startX = 0;
-    let endX = 0;
+    // fade in
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+      imgEl.style.opacity = '1';
+      imgEl.style.filter = 'blur(0)';
+    }, 50);
+
+    closeBtn.onclick = () => {
+      overlay.style.opacity = '0';
+      imgEl.style.filter = 'blur(5px)';
+      imgEl.style.opacity = '0';
+      setTimeout(() => {
+        overlay.remove();
+        document.body.style.overflow = '';
+      }, 400);
+    };
+
+    prev.onclick = () => { index = (index - 1 + imgs.length) % imgs.length; imgEl.src = imgs[index]; };
+    next.onclick = () => { index = (index + 1) % imgs.length; imgEl.src = imgs[index]; };
+
+    // Swipe táctil
+    let startX = 0, endX = 0;
     imgEl.addEventListener('touchstart', e => startX = e.touches[0].clientX);
     imgEl.addEventListener('touchmove', e => endX = e.touches[0].clientX);
     imgEl.addEventListener('touchend', () => {
       const diff = endX - startX;
-      if(Math.abs(diff)>50) diff>0?prev.onclick():next.onclick();
+      if (Math.abs(diff) > 50) diff > 0 ? prev.onclick() : next.onclick();
     });
 
+    // Teclado
     document.addEventListener('keydown', e => {
       if (!document.body.contains(overlay)) return;
-      if (e.key==='ArrowRight') next.onclick();
-      if (e.key==='ArrowLeft') prev.onclick();
-      if (e.key==='Escape') { overlay.remove(); document.body.style.overflow=''; }
+      if (e.key === 'ArrowRight') next.onclick();
+      if (e.key === 'ArrowLeft') prev.onclick();
+      if (e.key === 'Escape') closeBtn.onclick();
     });
-
-    // Ajuste flechas en móvil
-    if (window.innerWidth < 768) {
-      prev.style.left = '10px';
-      next.style.right = '10px';
-      prev.style.fontSize = next.style.fontSize = '1.8em';
-    }
   });
 });
 </script>
