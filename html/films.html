@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Luces — Angelo Baffari</title>
-  <link rel="icon" type="image/png" href="img/favicon.png" />
+  <link rel="icon" href="img/favicon.png" type="image/png" sizes="64x64">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -18,6 +18,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
 
     nav {
@@ -42,13 +43,11 @@
     }
 
     nav a:hover { color: #ffadad; }
-
     .logo-ab { font-size: 1.3em; font-weight: bold; color: #eaeaea; }
 
     main { padding: 60px 40px; }
 
     h1 { font-size: 2.5em; margin-bottom: 10px; color: #fcd5ce; }
-
     p.subtitle { font-size: 1.2em; color: #ccc; margin-bottom: 40px; }
 
     .film-grid {
@@ -89,7 +88,7 @@
       font-size: 1.5em;
       text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
     }
-    /* Cruces flotantes */
+
     .cruz {
       position: fixed;
       font-size: 1.5em;
@@ -111,19 +110,12 @@
     }
 
     @media (max-width: 768px) {
-      nav {
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      main {
-        padding: 30px 20px;
-      }
+      nav { flex-wrap: wrap; gap: 10px; }
+      main { padding: 30px 20px; }
     }
   </style>
 </head>
 <body>
-  <!-- Cruces flotantes -->
   <div class="cruz">✝︎</div>
   <div class="cruz">✝︎</div>
   <div class="cruz">✝︎</div>
@@ -131,11 +123,11 @@
 
   <nav>
     <a class="logo-ab">✝︎ ab</a>
-    <a href="index.html" >visiones</a>
+    <a href="index.html">visiones</a>
     <a href="music.html">melodías</a>
-    <a href="films.html" style="color: #ffadad;">luces</a> 
+    <a href="films.html" style="color: #ffadad;">luces</a>
     <a href="#">artes</a>
-   <a href="manifiesto.html" >manifiesto</a>
+    <a href="manifiesto.html">manifiesto</a>
   </nav>
 
   <main>
@@ -147,12 +139,10 @@
         <img src="films/somnium.jpg" alt="Somnium" />
         <div class="film-title">Somnium</div>
       </div>
-
       <div class="film" data-album="sincopae">
         <img src="films/sincopae.jpg" alt="Sincopæ" />
         <div class="film-title">Sincopæ</div>
       </div>
-
       <div class="film" data-album="cqp">
         <img src="films/cqp.jpg" alt="Cosas que pasan" />
         <div class="film-title">Cosas que pasan</div>
@@ -167,17 +157,16 @@ const videos = {
   "cqp": ["https://www.youtube.com/embed/PMLjq0Arm_o"]
 };
 
+const filmOrder = ["somnium","sincopae","cqp"];
 const filmsDOM = document.querySelectorAll('.film');
 
 filmsDOM.forEach(film => {
   film.addEventListener('click', () => {
-    const key = film.dataset.album;
-    const vids = videos[key];
+    let albumIndex = filmOrder.indexOf(film.dataset.album);
+    let vids = videos[film.dataset.album];
     if (!vids) return;
+    let vidIndex = 0;
 
-    let index = 0;
-
-    // overlay
     const overlay = document.createElement('div');
     overlay.style.position = 'fixed';
     overlay.style.top = 0;
@@ -186,22 +175,31 @@ filmsDOM.forEach(film => {
     overlay.style.height = '100vh';
     overlay.style.background = 'rgba(10,10,10,0.96)';
     overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
     overlay.style.justifyContent = 'center';
     overlay.style.alignItems = 'center';
     overlay.style.zIndex = '1000';
-    overlay.style.flexDirection = 'column';
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.3s ease';
 
-    // iframe
     const iframe = document.createElement('iframe');
-    iframe.src = vids[index] + "?autoplay=1";
+    iframe.src = vids[vidIndex] + "?autoplay=1";
     iframe.width = "80%";
     iframe.height = "80%";
     iframe.style.border = "none";
     iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
     iframe.allowFullscreen = true;
+    iframe.style.filter = 'blur(5px)';
+    iframe.style.opacity = '0';
+    iframe.style.transition = 'opacity 0.3s ease, filter 0.3s ease';
     overlay.appendChild(iframe);
 
-    // cerrar
+    setTimeout(() => {
+      overlay.style.opacity = '1';
+      iframe.style.opacity = '1';
+      iframe.style.filter = 'blur(0)';
+    }, 50);
+
     const closeBtn = document.createElement('div');
     closeBtn.textContent = '✝︎ cerrar ✝︎';
     closeBtn.style.position = 'fixed';
@@ -210,10 +208,14 @@ filmsDOM.forEach(film => {
     closeBtn.style.color = '#ffc6c6';
     closeBtn.style.cursor = 'pointer';
     closeBtn.style.fontSize = '1.2em';
-    closeBtn.onclick = () => overlay.remove();
+    closeBtn.onclick = () => {
+      overlay.style.opacity = '0';
+      iframe.style.filter = 'blur(5px)';
+      iframe.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 300);
+    };
     overlay.appendChild(closeBtn);
 
-    // flechas
     const prev = document.createElement('div');
     const next = document.createElement('div');
     [prev, next].forEach(btn => {
@@ -232,18 +234,22 @@ filmsDOM.forEach(film => {
     next.textContent = '⟶';
     prev.style.left = '40px';
     next.style.right = '40px';
-
-    prev.onclick = () => {
-      index = (index - 1 + vids.length) % vids.length;
-      iframe.src = vids[index] + "?autoplay=1";
-    };
-    next.onclick = () => {
-      index = (index + 1) % vids.length;
-      iframe.src = vids[index] + "?autoplay=1";
-    };
-
     overlay.appendChild(prev);
     overlay.appendChild(next);
+
+    prev.onclick = () => {
+      albumIndex = (albumIndex - 1 + filmOrder.length) % filmOrder.length;
+      vids = videos[filmOrder[albumIndex]];
+      vidIndex = 0;
+      iframe.src = vids[vidIndex] + "?autoplay=1";
+    };
+
+    next.onclick = () => {
+      albumIndex = (albumIndex + 1) % filmOrder.length;
+      vids = videos[filmOrder[albumIndex]];
+      vidIndex = 0;
+      iframe.src = vids[vidIndex] + "?autoplay=1";
+    };
 
     document.body.appendChild(overlay);
 
@@ -253,6 +259,13 @@ filmsDOM.forEach(film => {
       if (e.key === 'ArrowLeft') prev.onclick();
       if (e.key === 'Escape') overlay.remove();
     });
+
+    // Ajuste flechas en móvil
+    if (window.innerWidth < 768) {
+      prev.style.left = '10px';
+      next.style.right = '10px';
+      prev.style.fontSize = next.style.fontSize = '1.8em';
+    }
   });
 });
 </script>

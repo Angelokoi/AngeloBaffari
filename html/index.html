@@ -72,13 +72,10 @@
     .cruz:nth-child(3) { bottom: 50px; left: 60px; animation-delay: 2s; }
     .cruz:nth-child(4) { bottom: 40px; right: 50px; animation-delay: 3s; }
     @keyframes flotar { 0%,100%{transform:translateY(0) rotate(0deg);opacity:0.7;} 50%{transform:translateY(-12px) rotate(6deg);opacity:1;} }
-    @media (max-width: 768px) { nav { flex-wrap: wrap; gap:10px; } main { padding:30px 20px; } }
-    {
-  img {
-    max-width: 90vw !important;
-    max-height: 70vh !important;
-  }
-}
+    @media (max-width: 768px) { 
+      nav { flex-wrap: wrap; gap:10px; } 
+      main { padding:30px 20px; } 
+    }
   </style>
 </head>
 <body>
@@ -103,27 +100,27 @@
 
     <div class="album-grid">
       <div class="album" data-album="gorgojo">
-        <img src="visiones/gorgojo/_ANG0113.jpg" alt="Gorgojo (10-10-25)">
+        <img loading="lazy" src="visiones/gorgojo/_ANG0113.jpg" alt="Gorgojo (10-10-25)">
         <div class="album-title">Gorgojo (10-10-25)</div>
       </div>
       <div class="album" data-album="puja">
-        <img src="visiones/puja/_ANG9246.jpg" alt="puja (20-9-25)">
+        <img loading="lazy" src="visiones/puja/_ANG9246.jpg" alt="puja (20-9-25)">
         <div class="album-title">Puja (20-9-25)</div>
       </div>
       <div class="album" data-album="aqui">
-        <img src="visiones/aqui/_ANG9789.jpg" alt="aquí (2025)">
+        <img loading="lazy" src="visiones/aqui/_ANG9789.jpg" alt="aquí (2025)">
         <div class="album-title">ya estuve acá...</div>
       </div>
       <div class="album" data-album="nota">
-        <img src="visiones/El nota/img/35.jpg" alt="El Nota en vivo">
+        <img loading="lazy" src="visiones/El nota/img/35.jpg" alt="El Nota en vivo">
         <div class="album-title">El Nota en vivo</div>
       </div>
       <div class="album" data-album="Doble Seda">
-        <img src="visiones/Doble seda/img/_ANG3591.jpg" alt="Doble Seda">
+        <img loading="lazy" src="visiones/Doble seda/img/_ANG3591.jpg" alt="Doble Seda">
         <div class="album-title">Doble Seda</div>
       </div>
       <div class="album" data-album="la sombra">
-        <img src="visiones/Naturaleza/img/_ANG1777.jpg" alt="La sombra de tus ramas">
+        <img loading="lazy" src="visiones/Naturaleza/img/_ANG1777.jpg" alt="La sombra de tus ramas">
         <div class="album-title">La sombra de tus ramas</div>
       </div>
     </div>
@@ -154,14 +151,20 @@ albumsDOM.forEach(album => {
     overlay.style.top = 0;
     overlay.style.left = 0;
     overlay.style.width = '100vw';
-    overlay.style.height = '100dvh'; // usa dynamic viewport height
+    overlay.style.height = '100dvh';
     overlay.style.overflow = 'hidden';
     overlay.style.background = 'rgba(10,10,10,0.96)';
     overlay.style.display = 'flex';
-    overlay.style.flexDirection = 'column';
     overlay.style.justifyContent = 'center';
     overlay.style.alignItems = 'center';
     overlay.style.zIndex = '1000';
+    document.body.appendChild(overlay);
+    setTimeout(() => {
+    overlay.style.opacity = '1';
+    imgEl.style.opacity = '1';
+    imgEl.style.filter = 'blur(0)';
+  }, 50); // espera mínima para que la transición se ejecute
+    document.body.style.overflow = 'hidden';
 
     const imgEl = document.createElement('img');
     imgEl.src = imgs[index];
@@ -169,9 +172,16 @@ albumsDOM.forEach(album => {
     imgEl.style.maxHeight = '80vh';
     imgEl.style.objectFit = 'contain';
     imgEl.style.borderRadius = '10px';
-    imgEl.style.boxShadow = '0 0 20px rgba(255,255,255,0.1)';
-    imgEl.style.transition = 'opacity 0.3s ease';
     overlay.appendChild(imgEl);
+
+    // Para fade del overlay
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.3s ease';
+
+    // Para blur/fade de la imagen
+    imgEl.style.filter = 'blur(5px)';
+    imgEl.style.opacity = '0';
+    imgEl.style.transition = 'opacity 0.3s ease, filter 0.3s ease';
 
     const closeBtn = document.createElement('div');
     closeBtn.textContent = '✝︎ cerrar ✝︎';
@@ -181,7 +191,16 @@ albumsDOM.forEach(album => {
     closeBtn.style.color = '#ffc6c6';
     closeBtn.style.cursor = 'pointer';
     closeBtn.style.fontSize = '1.2em';
-    closeBtn.onclick = () => overlay.remove();
+    closeBtn.onclick = () => {
+      overlay.style.opacity = '0';
+    imgEl.style.filter = 'blur(5px)';
+    imgEl.style.opacity = '0';
+    setTimeout(() => {
+    overlay.remove();
+    document.body.style.overflow = '';  
+    }, 300); // coincide con la duración de la transición
+      document.body.style.overflow = '';
+    };
     overlay.appendChild(closeBtn);
 
     const prev = document.createElement('div');
@@ -202,53 +221,34 @@ albumsDOM.forEach(album => {
     next.textContent = '⟶';
     prev.style.left = '40px';
     next.style.right = '40px';
-
-    prev.onclick = () => {
-      index = (index - 1 + imgs.length) % imgs.length;
-      imgEl.style.opacity = '0';
-      setTimeout(() => { imgEl.src = imgs[index]; imgEl.style.opacity = '1'; }, 200);
-    };
-    next.onclick = () => {
-      index = (index + 1) % imgs.length;
-      imgEl.style.opacity = '0';
-      setTimeout(() => { imgEl.src = imgs[index]; imgEl.style.opacity = '1'; }, 200);
-    };
-
-     // Swipe para móviles
-    let startX = 0;
-    let endX = 0;
-
-    imgEl.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-  });
-
-    imgEl.addEventListener('touchmove', (e) => {
-    endX = e.touches[0].clientX;
-  });
-
-    imgEl.addEventListener('touchend', () => {
-    const diff = endX - startX;
-    if (Math.abs(diff) > 50) { // sensibilidad
-      if (diff > 0) {
-        // swipe derecha -> imagen anterior
-        prev.onclick();
-      } else {
-        // swipe izquierda -> siguiente imagen
-        next.onclick();
-    }
-  }
-});   
-
     overlay.appendChild(prev);
     overlay.appendChild(next);
-    document.body.appendChild(overlay);
 
-    document.addEventListener('keydown', (e) => {
-      if (!document.body.contains(overlay)) return;
-      if (e.key === 'ArrowRight') next.onclick();
-      if (e.key === 'ArrowLeft') prev.onclick();
-      if (e.key === 'Escape') overlay.remove();
+    prev.onclick = () => { index = (index-1+imgs.length)%imgs.length; imgEl.src = imgs[index]; }
+    next.onclick = () => { index = (index+1)%imgs.length; imgEl.src = imgs[index]; }
+
+    let startX = 0;
+    let endX = 0;
+    imgEl.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+    imgEl.addEventListener('touchmove', e => endX = e.touches[0].clientX);
+    imgEl.addEventListener('touchend', () => {
+      const diff = endX - startX;
+      if(Math.abs(diff)>50) diff>0?prev.onclick():next.onclick();
     });
+
+    document.addEventListener('keydown', e => {
+      if (!document.body.contains(overlay)) return;
+      if (e.key==='ArrowRight') next.onclick();
+      if (e.key==='ArrowLeft') prev.onclick();
+      if (e.key==='Escape') { overlay.remove(); document.body.style.overflow=''; }
+    });
+
+    // Ajuste flechas en móvil
+    if (window.innerWidth < 768) {
+      prev.style.left = '10px';
+      next.style.right = '10px';
+      prev.style.fontSize = next.style.fontSize = '1.8em';
+    }
   });
 });
 </script>
