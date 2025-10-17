@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>✝︎ Angelo Baffari — Melodías ✝︎</title>
-  <link rel="icon" type="image/png" href="img/favicon.png" /> <!-- Esto es el icono -->
+  <link rel="icon" type="image/png" href="img/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin:0; padding:0; }
@@ -79,9 +79,20 @@
       50% { transform: translateY(-12px) rotate(6deg); opacity: 1; }
     }
 
+    /* Ajustes móviles */
     @media (max-width:768px){
-      nav{flex-wrap:wrap;gap:10px;}
-      main{padding:30px 20px;}
+      nav{
+        flex-wrap:wrap;
+        gap:10px;
+        padding: 10px 5px;
+      }
+      nav a { font-size: 0.9em; }
+      main{
+        padding: 25px 15px;
+      }
+      h1 { font-size: 1.8em; margin-bottom: 12px; }
+      p.subtitle { font-size: 1em; margin-bottom: 15px; }
+      .cruz { font-size: 1.2em; }
     }
   </style>
 </head>

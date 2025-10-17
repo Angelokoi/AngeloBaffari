@@ -8,6 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
       font-family: 'IBM Plex Mono', monospace;
       color: #000000;
@@ -98,15 +99,42 @@
     .cruz:nth-child(4) { bottom: 40px; right: 50px; animation-delay: 3s; }
     @keyframes flotar { 0%,100%{transform:translateY(0) rotate(0deg);opacity:0.7;} 50%{transform:translateY(-12px) rotate(6deg);opacity:1;} }
 
-    @media (max-width: 768px) { 
-      nav { flex-wrap: wrap; gap:10px; } 
-      main { padding:30px 20px; }
+    /* Ajustes móviles mejorados */
+    @media (max-width: 768px) {
+      nav {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 5px;
+      }
+      main {
+        padding: 20px 15px;
+      }
+      h1 {
+        font-size: 1.8em;
+        margin-bottom: 8px;
+      }
+      p.subtitle {
+        font-size: 1em;
+        margin-bottom: 15px;
+      }
+      .album-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+      }
+      .album img {
+        max-height: 200px;
+      }
+      .album-title {
+        font-size: 0.9em;
+        bottom: 8px;
+        left: 8px;
+      }
       .album-grid .album:nth-child(-n+2) {
         grid-column: span 1;
         grid-row: span 1;
       }
     }
-  </style>
+</style>
 </head>
 <body>
 

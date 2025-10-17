@@ -79,9 +79,20 @@
       50% { transform: translateY(-12px) rotate(6deg); opacity: 1; }
     }
 
+    /* Ajustes móviles */
     @media (max-width:768px){
-      nav{flex-wrap:wrap;gap:10px;}
-      main{padding:30px 20px;}
+      nav {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 5px;
+      }
+      nav a { font-size: 0.9em; }
+      main {
+        padding: 25px 15px;
+      }
+      h1 { font-size: 1.8em; margin-bottom: 12px; }
+      p.subtitle { font-size: 1em; margin-bottom: 12px; }
+      .cruz { font-size: 1.2em; }
     }
   </style>
 </head>

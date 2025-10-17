@@ -49,7 +49,6 @@
       font-weight: 500;
       transition: 0.3s ease;
     }
-
     nav a:hover { color: #ffadad; }
     .logo-ab { font-size: 1.3em; font-weight: bold; color: #eaeaea; }
 
@@ -101,15 +100,7 @@
       grid-row: span 2;
     }
 
-    @media (max-width: 768px) {
-      nav { flex-wrap: wrap; gap: 10px; }
-      main { padding: 30px 20px; }
-      .film-grid .film:nth-child(-n+2) {
-        grid-column: span 1;
-        grid-row: span 1;
-      }
-    }
-
+    /* Cruces flotantes */
     .cruz {
       position: fixed;
       font-size: 1.5em;
@@ -119,7 +110,6 @@
       z-index: 5;
       pointer-events: none;
     }
-
     .cruz:nth-child(1) { top: 70px; left: 25px; animation-delay: 0s; }
     .cruz:nth-child(2) { top: 80px; right: 40px; animation-delay: 1s; }
     .cruz:nth-child(3) { bottom: 50px; left: 60px; animation-delay: 2s; }
@@ -128,6 +118,26 @@
     @keyframes flotar {
       0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
       50% { transform: translateY(-12px) rotate(6deg); opacity: 1; }
+    }
+
+    /* Ajustes móviles */
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; gap: 10px; padding: 10px 5px; }
+      nav a { font-size: 0.9em; }
+      main { padding: 25px 15px; }
+      h1 { font-size: 1.8em; margin-bottom: 12px; }
+      p.subtitle { font-size: 1em; margin-bottom: 15px; }
+      .film-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 10px;
+      }
+      .film img { max-height: 180px; }
+      .film-title { font-size: 1em; bottom: 8px; left: 8px; }
+      .film-grid .film:nth-child(-n+2) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+      .cruz { font-size: 1.2em; }
     }
   </style>
 </head>
