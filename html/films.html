@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Luces — Angelo Baffari</title>
+  <title>✝︎ Angelo Baffari — Luces ✝︎</title>
   <link rel="icon" href="img/favicon.png" type="image/png" sizes="64x64">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
@@ -11,7 +11,7 @@
 
     body {
       font-family: 'IBM Plex Mono', monospace;
-      background: url('img/bgfilms.jpg') no-repeat center center fixed;
+      background: url('img/bgfilmslowres.png') no-repeat center center fixed;
       background-size: cover;
       backdrop-filter: blur(6px);
       color: #eaeaea;
@@ -52,8 +52,8 @@
 
     .film-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 40px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
     }
 
     .film {
@@ -89,6 +89,21 @@
       text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
     }
 
+    /* Más recientes más grandes: los primeros dos ocupan más espacio */
+    .film-grid .film:nth-child(-n+2) {
+      grid-column: span 2;
+      grid-row: span 2;
+    }
+
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; gap: 10px; }
+      main { padding: 30px 20px; }
+      .film-grid .film:nth-child(-n+2) {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+    }
+
     .cruz {
       position: fixed;
       font-size: 1.5em;
@@ -107,11 +122,6 @@
     @keyframes flotar {
       0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
       50% { transform: translateY(-12px) rotate(6deg); opacity: 1; }
-    }
-
-    @media (max-width: 768px) {
-      nav { flex-wrap: wrap; gap: 10px; }
-      main { padding: 30px 20px; }
     }
   </style>
 </head>
@@ -132,9 +142,21 @@
 
   <main>
     <h1>luces</h1>
-    <p class="subtitle">Fragmentos de tiempo que respiran, poemas en movimiento, ecos de lo invisible 🎥</p>
+    <p class="subtitle">poemas en movimiento.</p>
 
     <div class="film-grid">
+      <div class="film" data-album="textra">
+        <img src="films/textra.jpg" alt="Tiempo Extra" />
+        <div class="film-title">Tiempo extra - Orenda Kilig</div>
+      </div>
+      <div class="film" data-album="Sinpara">
+        <img src="films/sinpara.jpg" alt="Sin paraíso" />
+        <div class="film-title">Sin paraíso (11/8/23)</div>
+      </div>
+      <div class="film" data-album="luces">
+        <img src="films/luces.jpg" alt="luces" />
+        <div class="film-title">Luces - Mili Machado</div>
+      </div>
       <div class="film" data-album="somnium">
         <img src="films/somnium.jpg" alt="Somnium" />
         <div class="film-title">Somnium</div>
@@ -152,121 +174,144 @@
 
 <script>
 const videos = {
-  "somnium": ["https://www.youtube.com/embed/uKYo0y_H69w"],
-  "sincopae": ["https://www.youtube.com/embed/dUC4hEDs-302"],
-  "cqp": ["https://www.youtube.com/embed/PMLjq0Arm_o"]
+  "textra": "https://www.youtube.com/embed/KX0XfL29NVU?list=RDKX0XfL29NVU",
+  "Sinpara": "https://www.youtube.com/embed/LOzTqV08yHE?list=RDLOzTqV08yHE",
+  "luces": "https://www.youtube.com/embed/sFW5-D8-flM",
+  "somnium": "https://www.youtube.com/embed/uKYo0y_H69w",
+  "sincopae": "https://www.youtube.com/embed/dUC4hEDs-30",
+  "cqp": "https://www.youtube.com/embed/PMLjq0Arm_o"
 };
 
-const filmOrder = ["somnium","sincopae","cqp"];
-const filmsDOM = document.querySelectorAll('.film');
+const filmsDOM = Array.from(document.querySelectorAll('.film'));
 
-filmsDOM.forEach(film => {
-  film.addEventListener('click', () => {
-    let albumIndex = filmOrder.indexOf(film.dataset.album);
-    let vids = videos[film.dataset.album];
-    if (!vids) return;
-    let vidIndex = 0;
+// Función principal para abrir overlay
+function openOverlay(film) {
+  const keys = filmsDOM.map(f => f.dataset.album);
+  let index = keys.indexOf(film.dataset.album);
 
-    const overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.top = 0;
-    overlay.style.left = 0;
-    overlay.style.width = '100vw';
-    overlay.style.height = '100vh';
-    overlay.style.background = 'rgba(10,10,10,0.96)';
-    overlay.style.display = 'flex';
-    overlay.style.flexDirection = 'column';
-    overlay.style.justifyContent = 'center';
-    overlay.style.alignItems = 'center';
-    overlay.style.zIndex = '1000';
-    overlay.style.opacity = '0';
-    overlay.style.transition = 'opacity 0.3s ease';
+  const overlay = document.createElement('div');
+  overlay.style.cssText = `
+    position:fixed;top:0;left:0;width:100vw;height:100vh;
+    background:rgba(10,10,10,0.96);display:flex;flex-direction:column;
+    justify-content:center;align-items:center;z-index:1000;opacity:0;
+    transition:opacity 0.3s ease;
+  `;
 
-    const iframe = document.createElement('iframe');
-    iframe.src = vids[vidIndex] + "?autoplay=1";
-    iframe.width = "80%";
-    iframe.height = "80%";
-    iframe.style.border = "none";
-    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
-    iframe.allowFullscreen = true;
-    iframe.style.filter = 'blur(5px)';
-    iframe.style.opacity = '0';
-    iframe.style.transition = 'opacity 0.3s ease, filter 0.3s ease';
-    overlay.appendChild(iframe);
+  const iframe = document.createElement('iframe');
+  const baseUrl = videos[film.dataset.album];
+  iframe.src = baseUrl + (baseUrl.includes('?') ? '&autoplay=1' : '?autoplay=1');
+  iframe.width = "80%";
+  iframe.height = "80%";
+  iframe.frameBorder = "0";
+  iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+  iframe.allowFullscreen = true;
+  iframe.style.transition = "opacity 0.3s ease";
+  iframe.style.opacity = "0";
+  overlay.appendChild(iframe);
 
-    setTimeout(() => {
-      overlay.style.opacity = '1';
-      iframe.style.opacity = '1';
-      iframe.style.filter = 'blur(0)';
-    }, 50);
+  // Botón cerrar
+  const closeBtn = document.createElement('div');
+  closeBtn.textContent = '✝︎ cerrar ✝︎';
+  closeBtn.style.cssText = 'position:absolute;top:20px;right:30px;color:#ffc6c6;cursor:pointer;font-size:1.2em;';
+  closeBtn.onclick = closeOverlay;
+  overlay.appendChild(closeBtn);
 
-    const closeBtn = document.createElement('div');
-    closeBtn.textContent = '✝︎ cerrar ✝︎';
-    closeBtn.style.position = 'fixed';
-    closeBtn.style.top = '20px';
-    closeBtn.style.right = '30px';
-    closeBtn.style.color = '#ffc6c6';
-    closeBtn.style.cursor = 'pointer';
-    closeBtn.style.fontSize = '1.2em';
-    closeBtn.onclick = () => {
-      overlay.style.opacity = '0';
-      iframe.style.filter = 'blur(5px)';
-      iframe.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 300);
-    };
-    overlay.appendChild(closeBtn);
-
-    const prev = document.createElement('div');
-    const next = document.createElement('div');
-    [prev, next].forEach(btn => {
-      btn.style.position = 'fixed';
-      btn.style.top = '50%';
-      btn.style.transform = 'translateY(-50%)';
-      btn.style.fontSize = '2em';
-      btn.style.cursor = 'pointer';
-      btn.style.color = '#ffc6c6';
-      btn.style.userSelect = 'none';
-      btn.style.transition = 'opacity 0.2s ease';
-      btn.onmouseenter = () => btn.style.opacity = '0.7';
-      btn.onmouseleave = () => btn.style.opacity = '1';
-    });
-    prev.textContent = '⟵';
-    next.textContent = '⟶';
-    prev.style.left = '40px';
-    next.style.right = '40px';
-    overlay.appendChild(prev);
-    overlay.appendChild(next);
-
-    prev.onclick = () => {
-      albumIndex = (albumIndex - 1 + filmOrder.length) % filmOrder.length;
-      vids = videos[filmOrder[albumIndex]];
-      vidIndex = 0;
-      iframe.src = vids[vidIndex] + "?autoplay=1";
-    };
-
-    next.onclick = () => {
-      albumIndex = (albumIndex + 1) % filmOrder.length;
-      vids = videos[filmOrder[albumIndex]];
-      vidIndex = 0;
-      iframe.src = vids[vidIndex] + "?autoplay=1";
-    };
-
-    document.body.appendChild(overlay);
-
-    document.addEventListener('keydown', (e) => {
-      if (!document.body.contains(overlay)) return;
-      if (e.key === 'ArrowRight') next.onclick();
-      if (e.key === 'ArrowLeft') prev.onclick();
-      if (e.key === 'Escape') overlay.remove();
-    });
-
-    // Ajuste flechas en móvil
-    if (window.innerWidth < 768) {
-      prev.style.left = '10px';
-      next.style.right = '10px';
-      prev.style.fontSize = next.style.fontSize = '1.8em';
-    }
+  // Flechas prev/next
+  const prev = document.createElement('div');
+  const next = document.createElement('div');
+  [prev, next].forEach(btn => {
+    btn.style.cssText = 'position:absolute;top:50%;transform:translateY(-50%);font-size:2em;color:#ffc6c6;cursor:pointer;user-select:none;';
   });
+  prev.textContent = '⟵'; prev.style.left = '40px';
+  next.textContent = '⟶'; next.style.right = '40px';
+  overlay.appendChild(prev); overlay.appendChild(next);
+
+  const updateIframe = (i) => {
+    const key = keys[i];
+    const url = videos[key];
+    iframe.style.opacity = 0;
+    setTimeout(() => {
+      iframe.src = url + (url.includes('?') ? '&autoplay=1' : '?autoplay=1');
+      setTimeout(() => iframe.style.opacity = 1, 50);
+    }, 200);
+  }
+
+  prev.onclick = () => { index = (index - 1 + keys.length) % keys.length; updateIframe(index); };
+  next.onclick = () => { index = (index + 1) % keys.length; updateIframe(index); };
+
+  document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => overlay.style.opacity = 1, 20);
+  setTimeout(() => iframe.style.opacity = 1, 200);
+
+  // Cierre del overlay
+  function closeOverlay() {
+    overlay.style.opacity = 0;
+    iframe.style.opacity = 0;
+    setTimeout(() => {
+      overlay.remove();
+      document.body.style.overflow = '';
+      if (window.history.state && window.history.state.overlayOpen) window.history.back();
+    }, 300);
+  }
+
+  // Keyboard
+  document.addEventListener('keydown', function handler(e) {
+    if(!document.body.contains(overlay)) { document.removeEventListener('keydown', handler); return; }
+    if(e.key==='ArrowLeft') prev.onclick();
+    if(e.key==='ArrowRight') next.onclick();
+    if(e.key==='Escape') closeOverlay();
+  });
+
+  // Swipe móvil
+  let startX = 0, startY = 0, moved = false;
+  iframe.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    moved = false;
+  });
+  iframe.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    if(Math.abs(dx) > 10 || Math.abs(dy) > 10) moved = true;
+  });
+  iframe.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if(!moved) return;
+    if(Math.abs(dx) > 50) dx > 0 ? prev.onclick() : next.onclick();
+  });
+
+  // Ajustes móviles
+  if (window.innerWidth < 768) {
+    prev.style.left = '10px';
+    next.style.right = '10px';
+    prev.style.fontSize = next.style.fontSize = '1.8em';
+  }
+
+  // Historial para botón Atrás
+  window.history.pushState({overlayOpen:true}, '');
+  const popHandler = (e) => {
+    if(document.body.contains(overlay)) closeOverlay();
+    window.removeEventListener('popstate', popHandler);
+  };
+  window.addEventListener('popstate', popHandler);
+}
+
+// Diferenciar swipe de tap al abrir overlay
+filmsDOM.forEach(film => {
+  let touchStartX=0, touchStartY=0, moved=false;
+  film.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    moved=false;
+  });
+  film.addEventListener('touchmove', e => {
+    const dx=Math.abs(e.touches[0].clientX-touchStartX);
+    const dy=Math.abs(e.touches[0].clientY-touchStartY);
+    if(dx>10 || dy>10) moved=true;
+  });
+  film.addEventListener('touchend', e => { if(!moved) openOverlay(film); });
+  film.addEventListener('click', e => { if(!moved) openOverlay(film); });
 });
 </script>
 </body>
