@@ -10,15 +10,26 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'IBM Plex Mono', monospace;
-      background: url('img/bgphotolowres.png') no-repeat center center fixed;
-      background-size: cover;
-      backdrop-filter: blur(6px);
       color: #000000;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       overflow-x: hidden;
     }
+
+    /* Fondo fijo con pseudo-elemento para móvil */
+    body::before {
+      content:'';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('img/bgphotolowres.png') center/cover no-repeat;
+      z-index: -1;
+      pointer-events: none;
+    }
+
     nav {
       position: sticky;
       top: 0;
@@ -35,6 +46,7 @@
     nav a { color: #b8f2e6; text-decoration: none; font-weight: 500; transition: 0.3s ease; }
     nav a:hover { color: #ffadad; }
     .logo-ab { font-size: 1.3em; font-weight: bold; color: #eaeaea; }
+
     main { padding: 60px 40px; }
     h1 { font-size: 2.5em; margin-bottom: 10px; color: #fcd5ce; }
     p.subtitle { font-size: 1.2em; color: #ccc; margin-bottom: 10px; }
@@ -89,7 +101,6 @@
     @media (max-width: 768px) { 
       nav { flex-wrap: wrap; gap:10px; } 
       main { padding:30px 20px; }
-      /* Evita que los grandes se vean raros en móvil */
       .album-grid .album:nth-child(-n+2) {
         grid-column: span 1;
         grid-row: span 1;
@@ -147,8 +158,8 @@
 
 <script>
 const albums = {
-  "nota":[ "visiones/El nota/img/35.jpg", "visiones/El nota/img/1.jpg", "visiones/El nota/img/2.jpg", "visiones/El nota/img/3.jpg", "visiones/El nota/img/4.jpg", "visiones/El nota/img/8.jpg", "visiones/El nota/img/9.jpg", "visiones/El nota/img/12.jpg", "visiones/El nota/img/13.jpg", "visiones/El nota/img/15.jpg", "visiones/El nota/img/17.jpg", "visiones/El nota/img/21.jpg", "visiones/El nota/img/24.jpg", "visiones/El nota/img/27.jpg", "visiones/El nota/img/31.jpg", "visiones/El nota/img/33.jpg", "visiones/El nota/img/41.jpg" ],
-  "Doble Seda":[ "visiones/Doble seda/img/_ANG3591.jpg", "visiones/Doble seda/img/_ANG3487.jpg", "visiones/Doble seda/img/_ANG3502.jpg", "visiones/Doble seda/img/_ANG3504.jpg", "visiones/Doble seda/img/_ANG3506.jpg", "visiones/Doble seda/img/_ANG3513.jpg", "visiones/Doble seda/img/_ANG3509.jpg", "visiones/Doble seda/img/_ANG3540.jpg", "visiones/Doble seda/img/_ANG3545.jpg", "visiones/Doble seda/img/_ANG3553.jpg", "visiones/Doble seda/img/_ANG3592.jpg" ],
+  "nota":[ "visiones/El nota/img/35.jpg","visiones/El nota/img/1.jpg","visiones/El nota/img/2.jpg","visiones/El nota/img/3.jpg","visiones/El nota/img/4.jpg","visiones/El nota/img/8.jpg","visiones/El nota/img/9.jpg","visiones/El nota/img/12.jpg","visiones/El nota/img/13.jpg","visiones/El nota/img/15.jpg","visiones/El nota/img/17.jpg","visiones/El nota/img/21.jpg","visiones/El nota/img/24.jpg","visiones/El nota/img/27.jpg","visiones/El nota/img/31.jpg","visiones/El nota/img/33.jpg","visiones/El nota/img/41.jpg" ],
+  "Doble Seda":[ "visiones/Doble seda/img/_ANG3591.jpg","visiones/Doble seda/img/_ANG3487.jpg","visiones/Doble seda/img/_ANG3502.jpg","visiones/Doble seda/img/_ANG3504.jpg","visiones/Doble seda/img/_ANG3506.jpg","visiones/Doble seda/img/_ANG3513.jpg","visiones/Doble seda/img/_ANG3509.jpg","visiones/Doble seda/img/_ANG3540.jpg","visiones/Doble seda/img/_ANG3545.jpg","visiones/Doble seda/img/_ANG3553.jpg","visiones/Doble seda/img/_ANG3592.jpg" ],
   "la sombra":[ "visiones/Naturaleza/img/_ANG1777.jpg","visiones/Naturaleza/img/_ANG6916.jpg","visiones/Naturaleza/img/_ANG7016.jpg" ],
   "gorgojo":[ "visiones/gorgojo/_ANG0113.jpg","visiones/gorgojo/_ANG0067.jpg","visiones/gorgojo/_ANG0128.jpg","visiones/gorgojo/_ANG9926.jpg","visiones/gorgojo/_ANG0135.jpg","visiones/gorgojo/_ANG0149.jpg","visiones/gorgojo/_ANG0196.jpg","visiones/gorgojo/_ANG0329.jpg","visiones/gorgojo/_ANG0216.jpg","visiones/gorgojo/_ANG0376.jpg","visiones/gorgojo/_ANG0421.jpg" ],
   "aqui":[ "visiones/aqui/_ANG9789.jpg","visiones/aqui/_ANG9802.jpg","visiones/aqui/_ANG9805.jpg","visiones/aqui/_ANG9806.jpg","visiones/aqui/_ANG9811.jpg","visiones/aqui/_ANG9826.jpg","visiones/aqui/_ANG9833.jpg","visiones/aqui/_ANG9838.jpg","visiones/aqui/_ANG9858.jpg","visiones/aqui/_ANG9864.jpg","visiones/aqui/_ANG9876.jpg","visiones/aqui/_ANG9887.jpg","visiones/aqui/_ANG9892.jpg" ],
@@ -158,57 +169,64 @@ const albums = {
 const albumsDOM = Array.from(document.querySelectorAll('.album'));
 
 albumsDOM.forEach(album => {
-  let touchStartX = 0, touchStartY = 0, moved = false;
+  let touchStartX=0,touchStartY=0,moved=false;
 
   const openOverlay = () => {
     const key = album.dataset.album;
     const imgs = albums[key];
-    if (!imgs) return;
+    if(!imgs) return;
 
     let index = 0;
-
-    window.scrollTo({ top: 0, behavior: "instant" });
-    document.body.style.overflow = 'hidden';
+    window.scrollTo({top:0,behavior:"instant"});
+    document.body.style.overflow='hidden';
 
     const overlay = document.createElement('div');
-    overlay.style.cssText = `
-      position:fixed;top:0;left:0;width:100vw;height:100dvh;
-      display:flex;flex-direction:column;justify-content:center;
-      align-items:center;background:rgba(10,10,10,0.96);
-      opacity:0;transition:opacity 0.3s ease;z-index:1000;
-    `;
+    overlay.style.cssText=`position:fixed;top:0;left:0;width:100vw;height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:rgba(10,10,10,0.96);opacity:0;transition:opacity 0.3s ease;z-index:1000;`;
 
     const imgEl = document.createElement('img');
-    imgEl.src = imgs[index];
-    imgEl.style.cssText = `
-      max-width:90vw; max-height:80vh; object-fit:contain; border-radius:10px;
-      filter:blur(6px); opacity:0; transition:opacity 0.3s ease, filter 0.3s ease;
-    `;
+    imgEl.src=imgs[index];
+    imgEl.style.cssText=`max-width:90vw; max-height:80vh; object-fit:contain; border-radius:10px; filter:blur(6px); opacity:0; transition:opacity 0.3s ease, filter 0.3s ease;`;
     overlay.appendChild(imgEl);
 
-    const closeBtn = document.createElement('div');
-    closeBtn.textContent = '✝︎ cerrar ✝︎';
-    closeBtn.style.cssText = 'position:fixed;top:20px;right:30px;color:#ffc6c6;cursor:pointer;font-size:1.2em;z-index:1001;';
-    overlay.appendChild(closeBtn);
-
-    const mobileHint = document.createElement('div');
-    mobileHint.textContent = '⟷ deslizar para cambiar ⟷';
-    mobileHint.style.cssText = `position:absolute;bottom:25px;color:#ccc;font-size:1em;opacity:0.7;display:${window.innerWidth<768?'block':'none'};`;
-    overlay.appendChild(mobileHint);
-
+    // Flechas
     const prev = document.createElement('div');
     const next = document.createElement('div');
-    prev.textContent = '⟵'; next.textContent = '⟶';
-    [prev, next].forEach(btn => {
-      btn.style.cssText = 'position:fixed;top:50%;transform:translateY(-50%);font-size:2em;color:#ffc6c6;cursor:pointer;user-select:none;z-index:1001;transition:opacity 0.2s;';
-    });
+    prev.textContent='⟵'; next.textContent='⟶';
+    [prev,next].forEach(btn=>{ btn.style.cssText='position:fixed;top:50%;transform:translateY(-50%);font-size:2em;color:#ffc6c6;cursor:pointer;user-select:none;z-index:1001;transition:opacity 0.2s;'; });
     prev.style.left='20px'; next.style.right='20px';
-    overlay.append(prev, next);
+    overlay.append(prev,next);
+
+    // Botón cerrar
+    const closeBtn = document.createElement('div');
+    closeBtn.textContent='✝︎ cerrar ✝︎';
+    closeBtn.style.cssText='position:fixed;top:20px;right:30px;color:#ffc6c6;cursor:pointer;font-size:1.2em;z-index:1001;';
+    overlay.appendChild(closeBtn);
+
+    // Hint móvil
+    const mobileHint = document.createElement('div');
+    mobileHint.textContent='⟷ deslizar para cambiar ⟷';
+    mobileHint.style.cssText=`position:absolute;bottom:25px;color:#ccc;font-size:1em;opacity:0.7;display:${window.innerWidth<768?'block':'none'};`;
+    overlay.appendChild(mobileHint);
+
+    // Indicadores de posición
+    const indicator = document.createElement('div');
+    indicator.style.cssText='position:fixed; bottom:20px; display:flex; gap:5px; justify-content:center; width:100%; z-index:1002;';
+    imgs.forEach((_,i)=>{
+      const dot = document.createElement('div');
+      dot.style.cssText='width:8px; height:8px; border-radius:50%; background:#555;';
+      if(i===0) dot.style.background='#ffc6c6';
+      indicator.appendChild(dot);
+    });
+    overlay.appendChild(indicator);
+
+    const updateIndicator = idx => {
+      indicator.childNodes.forEach((dot,i)=>dot.style.background=i===idx?'#ffc6c6':'#555');
+    };
 
     document.body.appendChild(overlay);
     setTimeout(()=>{ overlay.style.opacity='1'; imgEl.style.opacity='1'; imgEl.style.filter='blur(0)'; },50);
 
-    const closeOverlay = () => {
+    const closeOverlay=()=>{
       overlay.style.opacity='0';
       imgEl.style.opacity='0';
       imgEl.style.filter='blur(5px)';
@@ -218,17 +236,17 @@ albumsDOM.forEach(album => {
         if(history.state && history.state.overlay) history.back();
       },300);
     };
+    closeBtn.onclick=closeOverlay;
 
-    closeBtn.onclick = closeOverlay;
-    prev.onclick = ()=>{ index=(index-1+imgs.length)%imgs.length; imgEl.src=imgs[index]; };
-    next.onclick = ()=>{ index=(index+1)%imgs.length; imgEl.src=imgs[index]; };
+    prev.onclick=()=>{ index=(index-1+imgs.length)%imgs.length; imgEl.src=imgs[index]; updateIndicator(index); };
+    next.onclick=()=>{ index=(index+1)%imgs.length; imgEl.src=imgs[index]; updateIndicator(index); };
 
     let startX=0,endX=0;
-    imgEl.addEventListener('touchstart', e=>startX=e.touches[0].clientX);
-    imgEl.addEventListener('touchmove', e=>endX=e.touches[0].clientX);
-    imgEl.addEventListener('touchend', ()=>{ const diff=endX-startX; if(Math.abs(diff)>50) diff>0?prev.onclick():next.onclick(); });
+    imgEl.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
+    imgEl.addEventListener('touchmove',e=>endX=e.touches[0].clientX);
+    imgEl.addEventListener('touchend',()=>{ const diff=endX-startX; if(Math.abs(diff)>50) diff>0?prev.onclick():next.onclick(); });
 
-    document.addEventListener('keydown', e=>{
+    document.addEventListener('keydown',e=>{
       if(!document.body.contains(overlay)) return;
       if(e.key==='ArrowRight') next.onclick();
       if(e.key==='ArrowLeft') prev.onclick();
@@ -236,19 +254,16 @@ albumsDOM.forEach(album => {
     });
 
     history.pushState({overlay:true}, '');
-    const popHandler = (event)=>{
-      if(document.body.contains(overlay)) { closeOverlay(); window.removeEventListener('popstate',popHandler); }
-    };
+    const popHandler = ()=>{ if(document.body.contains(overlay)) { closeOverlay(); window.removeEventListener('popstate',popHandler); } };
     window.addEventListener('popstate', popHandler);
   };
 
-  album.addEventListener('touchstart', e => { touchStartX=e.touches[0].clientX; touchStartY=e.touches[0].clientY; moved=false; });
-  album.addEventListener('touchmove', e => { const dx=Math.abs(e.touches[0].clientX-touchStartX); const dy=Math.abs(e.touches[0].clientY-touchStartY); if(dx>10 || dy>10) moved=true; });
-  album.addEventListener('touchend', e=>{ if(!moved) openOverlay(); });
-  album.addEventListener('click', e=>{ if(!moved) openOverlay(); });
+  album.addEventListener('touchstart',e=>{ touchStartX=e.touches[0].clientX; touchStartY=e.touches[0].clientY; moved=false; });
+  album.addEventListener('touchmove',e=>{ const dx=Math.abs(e.touches[0].clientX-touchStartX); const dy=Math.abs(e.touches[0].clientY-touchStartY); if(dx>10 || dy>10) moved=true; });
+  album.addEventListener('touchend',e=>{ if(!moved) openOverlay(); });
+  album.addEventListener('click',e=>{ if(!moved) openOverlay(); });
 });
 </script>
-
 
 </body>
 </html>

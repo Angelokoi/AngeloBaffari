@@ -7,18 +7,22 @@
   <link rel="icon" type="image/png" href="img/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* Fondo fijo */
+    body::before {
+      content:'';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: url('img/mfbglowres.png') center/cover no-repeat;
+      z-index: -1;
+      pointer-events: none;
     }
 
     body {
       font-family: 'IBM Plex Mono', monospace;
-      background: url('img/mfbglowres.png') no-repeat center center fixed;
-      background-size: cover;
-      backdrop-filter: blur(6px);
-      color: #000000;
+      color: #000;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -33,7 +37,7 @@
       gap: 20px;
       justify-content: center;
       padding: 15px 0;
-      background: rgba(30, 30, 30, 0.6);
+      background: rgba(30,30,30,0.6);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid #444;
       z-index: 10;
@@ -46,72 +50,13 @@
       transition: 0.3s ease;
     }
 
-    nav a:hover {
-      color: #ffadad;
-    }
+    nav a:hover { color: #ffadad; }
+    .logo-ab { font-size: 1.3em; font-weight: bold; color: #eaeaea; }
 
-    .logo-ab {
-      font-size: 1.3em;
-      font-weight: bold;
-      color: #eaeaea;
-    }
+    main { padding: 60px 40px; }
 
-    main {
-      padding: 60px 40px;
-    }
-
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      color: #fcd5ce;
-    }
-
-    p.subtitle {
-      font-size: 1.2em;
-      color: #ccc;
-      margin-bottom: 40px;
-    }
-
-    .album-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 40px;
-    }
-
-    .album {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      border: 1px solid #444;
-      cursor: pointer;
-      transition: transform 0.4s ease;
-    }
-
-    .album:hover {
-      transform: scale(1.03);
-      box-shadow: 0 0 12px rgba(255, 173, 173, 0.2);
-    }
-
-    .album img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.7);
-      transition: filter 0.3s ease;
-    }
-
-    .album:hover img {
-      filter: brightness(1);
-    }
-
-    .album-title {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
-      color: #fff;
-      font-size: 1.5em;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
-    }
+    h1 { font-size: 2.5em; margin-bottom: 10px; color: #fcd5ce; }
+    p.subtitle { font-size: 1.2em; color: #ffffff; margin-bottom: 20px; }
 
     /* Cruces flotantes */
     .cruz {
@@ -130,19 +75,13 @@
     .cruz:nth-child(4) { bottom: 40px; right: 50px; animation-delay: 3s; }
 
     @keyframes flotar {
-      0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+      0%,100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
       50% { transform: translateY(-12px) rotate(6deg); opacity: 1; }
     }
 
-    @media (max-width: 768px) {
-      nav {
-        flex-wrap: wrap;
-        gap: 10px;
-      }
-
-      main {
-        padding: 30px 20px;
-      }
+    @media (max-width:768px){
+      nav{flex-wrap:wrap;gap:10px;}
+      main{padding:30px 20px;}
     }
   </style>
 </head>
@@ -155,14 +94,17 @@
 
   <nav>
     <a class="logo-ab">✝︎ ab</a>
-    <a href="index.html" >visiones</a>
-    <a href="music.html" >melodías</a>
-    <a href="films.html" >luces</a> 
+    <a href="index.html">visiones</a>
+    <a href="music.html">melodías</a>
+    <a href="films.html">luces</a> 
     <a href="#">artes</a>
     <a href="manifiesto.html" style="color: #ffadad;">manifiesto</a>
   </nav>
 
   <main>
     <h1>información de contacto</h1>
-    <p class="subtitle">angeloobaffari@gmail.com<p>
-        <p class="subtitle">Instagram: @angelo.koi</p>
+    <p class="subtitle">Email: angeloobaffari@gmail.com</p>
+    <p class="subtitle">Instagram: @angelo.koi</p>
+  </main>
+</body>
+</html>

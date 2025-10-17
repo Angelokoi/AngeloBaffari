@@ -9,19 +9,11 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* Fondo fijo con pseudo-elemento */
-    body::before {
-      content:'';
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: url('img/bgfilmslowres.png') center/cover no-repeat;
-      z-index: -1;
-      pointer-events: none;
-    }
-
     body {
       font-family: 'IBM Plex Mono', monospace;
+      background: url('img/bgfilmslowres.png') no-repeat center center fixed;
+      background-size: cover;
+      backdrop-filter: blur(6px);
       color: #eaeaea;
       min-height: 100vh;
       display: flex;
@@ -54,6 +46,7 @@
     .logo-ab { font-size: 1.3em; font-weight: bold; color: #eaeaea; }
 
     main { padding: 60px 40px; }
+
     h1 { font-size: 2.5em; margin-bottom: 10px; color: #fcd5ce; }
     p.subtitle { font-size: 1.2em; color: #ccc; margin-bottom: 40px; }
 
@@ -96,6 +89,7 @@
       text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
     }
 
+    /* Más recientes más grandes: los primeros dos ocupan más espacio */
     .film-grid .film:nth-child(-n+2) {
       grid-column: span 2;
       grid-row: span 2;
@@ -190,6 +184,7 @@ const videos = {
 
 const filmsDOM = Array.from(document.querySelectorAll('.film'));
 
+// Función principal para abrir overlay
 function openOverlay(film) {
   const keys = filmsDOM.map(f => f.dataset.album);
   let index = keys.indexOf(film.dataset.album);
@@ -214,12 +209,14 @@ function openOverlay(film) {
   iframe.style.opacity = "0";
   overlay.appendChild(iframe);
 
+  // Botón cerrar
   const closeBtn = document.createElement('div');
   closeBtn.textContent = '✝︎ cerrar ✝︎';
   closeBtn.style.cssText = 'position:absolute;top:20px;right:30px;color:#ffc6c6;cursor:pointer;font-size:1.2em;';
   closeBtn.onclick = closeOverlay;
   overlay.appendChild(closeBtn);
 
+  // Flechas prev/next
   const prev = document.createElement('div');
   const next = document.createElement('div');
   [prev, next].forEach(btn => {
@@ -247,6 +244,7 @@ function openOverlay(film) {
   setTimeout(() => overlay.style.opacity = 1, 20);
   setTimeout(() => iframe.style.opacity = 1, 200);
 
+  // Cierre del overlay
   function closeOverlay() {
     overlay.style.opacity = 0;
     iframe.style.opacity = 0;
@@ -257,6 +255,7 @@ function openOverlay(film) {
     }, 300);
   }
 
+  // Keyboard
   document.addEventListener('keydown', function handler(e) {
     if(!document.body.contains(overlay)) { document.removeEventListener('keydown', handler); return; }
     if(e.key==='ArrowLeft') prev.onclick();
@@ -264,26 +263,53 @@ function openOverlay(film) {
     if(e.key==='Escape') closeOverlay();
   });
 
-  let startX=0,startY=0,moved=false;
-  iframe.addEventListener('touchstart', e => { startX=e.touches[0].clientX; startY=e.touches[0].clientY; moved=false; });
-  iframe.addEventListener('touchmove', e => { const dx=e.touches[0].clientX-startX; const dy=e.touches[0].clientY-startY; if(Math.abs(dx)>10 || Math.abs(dy)>10) moved=true; });
-  iframe.addEventListener('touchend', e => { const dx=e.changedTouches[0].clientX-startX; if(!moved) return; if(Math.abs(dx)>50) dx>0?prev.onclick():next.onclick(); });
+  // Swipe móvil
+  let startX = 0, startY = 0, moved = false;
+  iframe.addEventListener('touchstart', e => {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    moved = false;
+  });
+  iframe.addEventListener('touchmove', e => {
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    if(Math.abs(dx) > 10 || Math.abs(dy) > 10) moved = true;
+  });
+  iframe.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - startX;
+    if(!moved) return;
+    if(Math.abs(dx) > 50) dx > 0 ? prev.onclick() : next.onclick();
+  });
 
+  // Ajustes móviles
   if (window.innerWidth < 768) {
     prev.style.left = '10px';
     next.style.right = '10px';
     prev.style.fontSize = next.style.fontSize = '1.8em';
   }
 
+  // Historial para botón Atrás
   window.history.pushState({overlayOpen:true}, '');
-  const popHandler = (e) => { if(document.body.contains(overlay)) closeOverlay(); window.removeEventListener('popstate', popHandler); };
+  const popHandler = (e) => {
+    if(document.body.contains(overlay)) closeOverlay();
+    window.removeEventListener('popstate', popHandler);
+  };
   window.addEventListener('popstate', popHandler);
 }
 
+// Diferenciar swipe de tap al abrir overlay
 filmsDOM.forEach(film => {
   let touchStartX=0, touchStartY=0, moved=false;
-  film.addEventListener('touchstart', e => { touchStartX=e.touches[0].clientX; touchStartY=e.touches[0].clientY; moved=false; });
-  film.addEventListener('touchmove', e => { const dx=Math.abs(e.touches[0].clientX-touchStartX); const dy=Math.abs(e.touches[0].clientY-touchStartY); if(dx>10||dy>10)moved=true; });
+  film.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    moved=false;
+  });
+  film.addEventListener('touchmove', e => {
+    const dx=Math.abs(e.touches[0].clientX-touchStartX);
+    const dy=Math.abs(e.touches[0].clientY-touchStartY);
+    if(dx>10 || dy>10) moved=true;
+  });
   film.addEventListener('touchend', e => { if(!moved) openOverlay(film); });
   film.addEventListener('click', e => { if(!moved) openOverlay(film); });
 });
