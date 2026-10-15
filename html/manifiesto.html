@@ -5,16 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>✝︎ Angelo Baffari — Manifiesto ✝︎</title>
   <link rel="icon" type="image/png" href="img/favicon.png" />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* Fondo fijo */
     body::before {
-      content:'';
+      content: '';
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
+      height: 100dvh;
       background: url('img/mfbglowres.png') center/cover no-repeat;
       z-index: -1;
       pointer-events: none;
@@ -42,23 +42,66 @@
       border-bottom: 1px solid #444;
       z-index: 10;
     }
-
-    nav a {
-      color: #b8f2e6;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s ease;
-    }
-
+    nav a { color: #b8f2e6; text-decoration: none; font-weight: 500; transition: 0.3s ease; }
     nav a:hover { color: #ffadad; }
     .logo-ab { font-size: 1.3em; font-weight: bold; color: #eaeaea; }
 
-    main { padding: 60px 40px; }
+    main { padding: 60px 20px; }
+    h1 { font-size: 2.5em; margin-bottom: 10px; color: #fcd5ce; text-align: center; }
+    p.subtitle { font-size: 1.1em; color: #fff; margin-bottom: 20px; text-align: center; }
 
-    h1 { font-size: 2.5em; margin-bottom: 10px; color: #fcd5ce; }
-    p.subtitle { font-size: 1.2em; color: #ffffff; margin-bottom: 20px; }
+    /* El rollo: columna central con los dos extremos enrollados */
+    .rollo {
+      position: relative;
+      max-width: 700px;
+      margin: 50px auto 60px;
+      padding: 56px 44px;
+      background: rgba(24,20,22,0.8);
+      backdrop-filter: blur(6px);
+      border-left: 1px solid #555;
+      border-right: 1px solid #555;
+    }
+    .rollo::before, .rollo::after {
+      content: '';
+      position: absolute;
+      left: -16px; right: -16px;
+      height: 28px;
+      border-radius: 14px;
+      background: linear-gradient(#8a6f73, #3a2e30 55%, #1a1415);
+      border: 1px solid #666;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.5);
+    }
+    .rollo::before { top: -14px; }
+    .rollo::after { bottom: -14px; }
 
-    /* Cruces flotantes */
+    .meta { color: #b8f2e6; font-size: 0.8em; margin-bottom: 4px; }
+    h2 {
+      font-family: 'UnifrakturCook', serif;
+      font-weight: 700;
+      font-size: 2em;
+      color: #fcd5ce;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .texto { white-space: pre-wrap; line-height: 1.8; font-weight: 300; font-size: 0.95em; color: #e8e8e8; }
+    .sep { text-align: center; color: #ffadad; opacity: 0.7; margin: 38px 0; font-size: 1.3em; }
+    .vacio { color: #ccc; text-align: center; }
+
+    /* Contacto */
+    .contacto {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 18px 22px;
+      border: 1px solid #444;
+      border-radius: 12px;
+      background: rgba(30,30,30,0.6);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      font-size: 0.9em;
+      line-height: 1.7;
+    }
+    .contacto strong { color: #fcd5ce; font-weight: 500; }
+
     .cruz {
       position: fixed;
       font-size: 1.5em;
@@ -68,36 +111,29 @@
       z-index: 5;
       pointer-events: none;
     }
-
     .cruz:nth-child(1) { top: 70px; left: 25px; animation-delay: 0s; }
     .cruz:nth-child(2) { top: 80px; right: 40px; animation-delay: 1s; }
     .cruz:nth-child(3) { bottom: 50px; left: 60px; animation-delay: 2s; }
     .cruz:nth-child(4) { bottom: 40px; right: 50px; animation-delay: 3s; }
-
     @keyframes flotar {
       0%,100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
       50% { transform: translateY(-12px) rotate(6deg); opacity: 1; }
     }
+    @media (prefers-reduced-motion: reduce) { .cruz { animation: none; } }
 
-    /* Ajustes móviles */
-    @media (max-width:768px){
-      nav {
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 10px 5px;
-      }
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; gap: 10px; padding: 10px 5px; }
       nav a { font-size: 0.9em; }
-      main {
-        padding: 25px 15px;
-      }
-      h1 { font-size: 1.8em; margin-bottom: 12px; }
-      p.subtitle { font-size: 1em; margin-bottom: 12px; }
+      main { padding: 25px 12px; }
+      h1 { font-size: 1.8em; }
+      .rollo { padding: 44px 20px; margin: 40px auto 50px; }
+      .rollo::before, .rollo::after { left: -8px; right: -8px; }
+      h2 { font-size: 1.6em; }
       .cruz { font-size: 1.2em; }
     }
   </style>
 </head>
 <body>
-  <!-- Cruces flotantes -->
   <div class="cruz">✝︎</div>
   <div class="cruz">✝︎</div>
   <div class="cruz">✝︎</div>
@@ -107,15 +143,73 @@
     <a class="logo-ab">✝︎ ab</a>
     <a href="index.html">visiones</a>
     <a href="music.html">melodías</a>
-    <a href="films.html">luces</a> 
-    <a href="#">artes</a>
+    <a href="films.html">luces</a>
+    <a href="artes.html">artes</a>
     <a href="manifiesto.html" style="color: #ffadad;">manifiesto</a>
   </nav>
 
   <main>
-    <h1>información de contacto</h1>
-    <p class="subtitle">Email: angeloobaffari@gmail.com</p>
-    <p class="subtitle">Instagram: @angelo.koi</p>
+    <h1>manifiesto</h1>
+    <p class="subtitle">escrituras, diario y poesía</p>
+
+    <div class="rollo" id="entradas"></div>
+
+    <div class="contacto">
+      <strong>contacto</strong><br>
+      Email: angeloobaffari@gmail.com<br>
+      Instagram: @angelo.koi
+    </div>
   </main>
+
+
+  <script src="textos.js"></script>
+  <script>
+
+///Como todo artista busco atravesar
+//todas las barreras de expresividad
+//que me sean posibles.
+//En este último tiempo a través de la reflexión
+//y de la inflexión, donde leves particulas brotaban de mi cuerpo partido, pude descubrir que el acabar con la vida propia es, con total certeza, el acto más artístico posible.
+
+//Somos los humanos la única especie capaz de decidir activamente el acabar con nuestras propias vidas, eso, entre algunas otras pocas cosas relevantes, es lo que nos hace justamente humanos.
+
+//Es por esa razón que la decisión no debe ser tomada con levedad, sino que debería ser tratada con la importancia que la representa.
+//Es la magnum opus de un artista, debe ser planificado, guionado, musicalizado y registrado de manera óptima.
+
+//Aún queda tiempo, no debe hacerse con la esperanza de ser reconocido por ello, sino que debe ser la vida el trayecto de instrucción, donde aprenderás todo el lenguaje artístico necesario para hacer que valga realmente la pena.
+//El día después, el día más bello del mundo, ese es tu regalo, no serás capaz de sentir el aprecio de los merecedores de esa dedicatoria y eso lo hace de cierta manera aún más bello y noble. 
+
+    // Ordena por fecha: el más nuevo siempre arriba, sin importar en qué orden los cargues
+    const lista = (typeof textos !== 'undefined' ? textos : []).slice()
+      .sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+    const cont = document.getElementById('entradas');
+
+    if (!lista.length) {
+      cont.innerHTML = '<p class="vacio">todavía no hay textos...</p>';
+    }
+
+    lista.forEach((t, i) => {
+      if (i > 0) {
+        const s = document.createElement('div');
+        s.className = 'sep';
+        s.textContent = '✝︎';
+        cont.appendChild(s);
+      }
+      const art = document.createElement('article');
+      const fecha = t.fecha
+        ? new Date(t.fecha + 'T00:00:00').toLocaleDateString('es-AR', { day: 'numeric', month: 'long', year: 'numeric' })
+        : '';
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      meta.textContent = [fecha, t.tipo].filter(Boolean).join(' · ');
+      const h = document.createElement('h2');
+      h.textContent = t.titulo || '';
+      const p = document.createElement('div');
+      p.className = 'texto';
+      p.textContent = (t.texto || '').trim();
+      art.append(meta, h, p);
+      cont.appendChild(art);
+    });
+  </script>
 </body>
 </html>

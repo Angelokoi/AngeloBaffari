@@ -7,14 +7,15 @@
   <link rel="icon" type="image/png" href="img/favicon.png" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; margin:0; padding:0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     /* Fondo fijo */
     body::before {
-      content:'';
+      content: '';
       position: fixed;
       top: 0; left: 0;
       width: 100vw; height: 100vh;
+      height: 100dvh;
       background: url('img/melodybglowres.png') center/cover no-repeat;
       z-index: -1;
       pointer-events: none;
@@ -42,21 +43,84 @@
       border-bottom: 1px solid #444;
       z-index: 10;
     }
-
-    nav a {
-      color: #b8f2e6;
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s ease;
-    }
-
+    nav a { color: #b8f2e6; text-decoration: none; font-weight: 500; transition: 0.3s ease; }
     nav a:hover { color: #ffadad; }
     .logo-ab { font-size: 1.3em; font-weight: bold; color: #eaeaea; }
 
-    main { padding: 60px 40px; }
+    main { padding: 60px 40px; max-width: 1000px; width: 100%; margin: 0 auto; }
+    h1 { font-size: 2.5em; margin-bottom: 40px; color: #fcd5ce; }
 
-    h1 { font-size: 2.5em; margin-bottom: 10px; color: #fcd5ce; }
-    p.subtitle { font-size: 1.2em; color: #ccc; margin-bottom: 40px; }
+    /* Cada proyecto es una sección */
+    section { margin-bottom: 56px; }
+    h2 { font-size: 1.5em; font-weight: 500; color: #fcd5ce; margin-bottom: 6px; }
+    p.desc { color: #ccc; font-size: 0.95em; max-width: 60ch; line-height: 1.5; }
+
+    /* Encabezado de cada proyecto: logo (opcional) al lado del título */
+    .encabezado {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+    .logo-banda {
+      height: 72px;
+      width: auto;
+      flex-shrink: 0;
+      border: none;
+      border-radius: 0;
+    }
+
+    /* Bloques flotantes */
+    .bloques {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 18px;
+    }
+    .bloque {
+      position: relative;
+      overflow: hidden;
+      display: block;
+      padding: 22px 20px;
+      border-radius: 12px;
+      border: 1px solid #444;
+      background: rgba(30,30,30,0.6);
+      backdrop-filter: blur(10px);
+      color: #b8f2e6;
+      text-decoration: none;
+      animation: flotar 6s ease-in-out infinite;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+    }
+    .bloque:nth-child(2) { animation-delay: 1s; }
+    .bloque:nth-child(3) { animation-delay: 2s; }
+    .bloque:nth-child(4) { animation-delay: 3s; }
+    .bloque:nth-child(5) { animation-delay: 4s; }
+    .bloque:hover, .bloque:focus-visible {
+      color: #ffadad;
+      border-color: #ffadad;
+      box-shadow: 0 0 14px rgba(255,173,173,0.25);
+      animation-play-state: paused;
+      outline: none;
+    }
+    .bloque strong { position: relative; display: block; font-size: 1.2em; font-weight: 500; margin-bottom: 4px; }
+    .bloque span { position: relative; font-size: 0.85em; color: #ccc; }
+
+    /* Imagen PNG transparente opcional dentro del bloque (queda de fondo, suave) */
+    .bloque .icono {
+      position: absolute;
+      right: -6px;
+      bottom: -6px;
+      height: 84px;
+      width: auto;
+      opacity: 0.25;
+      pointer-events: none;
+      transition: opacity 0.3s ease, transform 0.4s ease;
+    }
+    .bloque:hover .icono, .bloque:focus-visible .icono { opacity: 0.6; transform: scale(1.06) rotate(-3deg); }
+
+    /* Links que todavía no tienen dirección */
+    .bloque.pronto { opacity: 0.45; cursor: default; animation: none; }
+    .bloque.pronto:hover { color: #b8f2e6; border-color: #444; box-shadow: none; }
+    .bloque.pronto:hover .icono { opacity: 0.25; transform: none; }
 
     /* Cruces flotantes */
     .cruz {
@@ -68,36 +132,35 @@
       z-index: 5;
       pointer-events: none;
     }
-
     .cruz:nth-child(1) { top: 70px; left: 25px; animation-delay: 0s; }
     .cruz:nth-child(2) { top: 80px; right: 40px; animation-delay: 1s; }
     .cruz:nth-child(3) { bottom: 50px; left: 60px; animation-delay: 2s; }
     .cruz:nth-child(4) { bottom: 40px; right: 50px; animation-delay: 3s; }
 
     @keyframes flotar {
-      0%,100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
-      50% { transform: translateY(-12px) rotate(6deg); opacity: 1; }
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
     }
 
-    /* Ajustes móviles */
-    @media (max-width:768px){
-      nav{
-        flex-wrap:wrap;
-        gap:10px;
-        padding: 10px 5px;
-      }
+    @media (prefers-reduced-motion: reduce) {
+      .bloque, .cruz { animation: none; }
+    }
+
+    /* Móvil */
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; gap: 10px; padding: 10px 5px; }
       nav a { font-size: 0.9em; }
-      main{
-        padding: 25px 15px;
-      }
-      h1 { font-size: 1.8em; margin-bottom: 12px; }
-      p.subtitle { font-size: 1em; margin-bottom: 15px; }
+      main { padding: 25px 15px; }
+      h1 { font-size: 1.8em; margin-bottom: 25px; }
+      .logo-banda { height: 54px; }
+      .bloques { grid-template-columns: 1fr 1fr; gap: 12px; }
+      .bloque { padding: 16px 14px; }
+      .bloque .icono { height: 64px; }
       .cruz { font-size: 1.2em; }
     }
   </style>
 </head>
 <body>
-  <!-- Cruces flotantes -->
   <div class="cruz">✝︎</div>
   <div class="cruz">✝︎</div>
   <div class="cruz">✝︎</div>
@@ -107,14 +170,84 @@
     <a class="logo-ab">✝︎ ab</a>
     <a href="index.html">visiones</a>
     <a href="music.html" style="color: #ffadad;">melodías</a>
-    <a href="films.html">luces</a> 
-    <a href="#">artes</a>
+    <a href="films.html">luces</a>
+    <a href="artes.html">artes</a>
     <a href="manifiesto.html">manifiesto</a>
   </nav>
 
   <main>
     <h1>melodías</h1>
-    <p class="subtitle">Sólo necesito un ángel...</p>
+
+    <!--
+      CÓMO EDITAR:
+      - Para cambiar un link: reemplazá el href="#" por la dirección completa (con https://).
+      - Los bloques con href="#" se ven apagados hasta que les pongas link.
+      - Para agregar un bloque, copiá una línea <a class="bloque"...>...</a> entera y pegala dentro del mismo grupo.
+      - Para ponerle una imagen PNG transparente a un bloque, agregá esta línea dentro del <a>, antes de <strong>:
+          <img class="icono" src="img/tu-imagen.png" alt="">
+    -->
+
+    <!-- BANDA -->
+    <section>
+      <div class="encabezado">
+        <img class="logo-banda" src="img/snuapng.png" alt="Sólo necesito un ángel">
+        <div>
+          <h2>sólo necesito un ángel</h2>
+          <p class="desc">Angelo, Eliseo, Tomás, Salvador.</p>
+        </div>
+      </div>
+      <div class="bloques">
+        <a class="bloque" href="https://soundcloud.com/solonecesitounangel" target="_blank" rel="noopener">
+          <strong>SoundCloud</strong><span>escuchar</span>
+        </a>
+        <a class="bloque" href="#" target="_blank" rel="noopener">
+          <strong>Spotify</strong><span>escuchar</span>
+        </a>
+        <a class="bloque" href="#" target="_blank" rel="noopener">
+          <strong>YouTube</strong><span>ver y escuchar</span>
+        </a>
+        <a class="bloque" href="https://www.instagram.com/solonecesitounangel/" target="_blank" rel="noopener">
+          <strong>Instagram</strong><span>seguir a la banda</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SOLISTA -->
+    <section>
+      <div class="encabezado">
+      <img class="logo-banda" src="img/gatito snua.png" alt="Sólo necesito un ángel">
+        <div>
+          <h2>angelokoii</h2>
+          <p class="desc">Solista.</p>
+        </div>
+      </div>
+      <div class="bloques">
+        <a class="bloque" href="#" target="_blank" rel="noopener">
+          <strong>Spotify</strong><span>escuchar</span>
+        </a>
+        <a class="bloque" href="https://soundcloud.com/angelokoii" target="_blank" rel="noopener">
+          <strong>SoundCloud</strong><span>escuchar</span>
+        </a>
+        <a class="bloque" href="#" target="_blank" rel="noopener">
+          <strong>YouTube</strong><span>ver y escuchar</span>
+        </a>
+        <a class="bloque" href="https://www.instagram.com/angelokoii/" target="_blank" rel="noopener">
+          <strong>Instagram</strong><span>seguir</span>
+        </a>
+      </div>
+    </section>
   </main>
+
+  <script>
+    // Los bloques sin link real (href="#") quedan apagados y no hacen nada
+    document.querySelectorAll('.bloque').forEach(function (b) {
+      if (b.getAttribute('href') === '#') {
+        b.classList.add('pronto');
+        b.setAttribute('aria-disabled', 'true');
+        b.querySelector('span').textContent = 'próximamente';
+        b.addEventListener('click', function (e) { e.preventDefault(); });
+      }
+    });
+  </script>
 </body>
 </html>

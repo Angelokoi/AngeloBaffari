@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>✝︎ Angelo Baffari — Artes ✝︎</title>
+  <link rel="icon" type="image/png" href="img/favicon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      height: 100dvh;
+      background: url('img/bgphotolowres.png') center/cover no-repeat; /* cambialo por un fondo propio de artes si querés */
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body {
+      font-family: 'IBM Plex Mono', monospace;
+      color: #000;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      padding: 15px 0;
+      background: rgba(30,30,30,0.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid #444;
+      z-index: 10;
+    }
+    nav a { color: #b8f2e6; text-decoration: none; font-weight: 500; transition: 0.3s ease; }
+    nav a:hover { color: #ffadad; }
+    .logo-ab { font-size: 1.3em; font-weight: bold; color: #eaeaea; }
+
+    main { padding: 60px 40px; }
+    h1 { font-size: 2.5em; margin-bottom: 10px; color: #fcd5ce; }
+    p.subtitle { font-size: 1.2em; color: #ccc; margin-bottom: 24px; }
+
+    /* Filtros por técnica (se generan solos) */
+    #filtros { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+    #filtros button {
+      font-family: inherit;
+      font-size: 0.9em;
+      color: #b8f2e6;
+      background: rgba(30,30,30,0.6);
+      border: 1px solid #444;
+      border-radius: 20px;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    #filtros button:hover, #filtros button.activo { color: #ffadad; border-color: #ffadad; }
+
+    /* Galería en columnas: cada obra conserva su proporción */
+    #galeria { column-width: 240px; column-gap: 14px; }
+    .obra {
+      display: block;
+      width: 100%;
+      position: relative;
+      margin-bottom: 14px;
+      padding: 0;
+      break-inside: avoid;
+      overflow: hidden;
+      border: 1px solid #444;
+      border-radius: 12px;
+      background: #111;
+      cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .obra:hover, .obra:focus-visible { transform: scale(1.02); box-shadow: 0 0 12px rgba(255,173,173,0.2); outline: none; }
+    .obra img { display: block; width: 100%; height: auto; filter: brightness(0.8); transition: filter 0.3s ease; }
+    .obra:hover img, .obra:focus-visible img { filter: brightness(1); }
+    .obra .tit {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 24px 12px 10px;
+      text-align: left;
+      font-family: inherit; font-size: 0.9em; color: #fff;
+      background: linear-gradient(transparent, rgba(0,0,0,0.75));
+      opacity: 0; transition: opacity 0.3s ease;
+    }
+    .obra:hover .tit, .obra:focus-visible .tit { opacity: 1; }
+    .vacio { color: #ccc; }
+
+    /* Visor */
+    .visor {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      background: rgba(10,10,10,0.96);
+      z-index: 1000;
+    }
+    .visor img { max-width: 90vw; max-height: 78vh; object-fit: contain; border-radius: 10px; }
+    .visor p { color: #ccc; margin-top: 14px; font-size: 0.9em; text-align: center; padding: 0 20px; }
+    .visor .cerrar { position: fixed; top: 20px; right: 30px; color: #ffc6c6; cursor: pointer; font-size: 1.2em; }
+    .visor .flecha { position: fixed; top: 50%; transform: translateY(-50%); font-size: 2em; color: #ffc6c6; cursor: pointer; user-select: none; padding: 10px; }
+    .visor .izq { left: 10px; }
+    .visor .der { right: 10px; }
+
+    .cruz {
+      position: fixed;
+      font-size: 1.5em;
+      color: #ffadad;
+      opacity: 0.7;
+      animation: flotar 6s ease-in-out infinite;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .cruz:nth-child(1) { top: 70px; left: 25px; animation-delay: 0s; }
+    .cruz:nth-child(2) { top: 80px; right: 40px; animation-delay: 1s; }
+    .cruz:nth-child(3) { bottom: 50px; left: 60px; animation-delay: 2s; }
+    .cruz:nth-child(4) { bottom: 40px; right: 50px; animation-delay: 3s; }
+    @keyframes flotar {
+      0%,100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+      50% { transform: translateY(-12px) rotate(6deg); opacity: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) { .cruz { animation: none; } }
+
+    @media (max-width: 768px) {
+      nav { flex-wrap: wrap; gap: 10px; padding: 10px 5px; }
+      nav a { font-size: 0.9em; }
+      main { padding: 25px 15px; }
+      h1 { font-size: 1.8em; }
+      p.subtitle { font-size: 1em; }
+      #galeria { column-width: 150px; column-gap: 10px; }
+      .obra { margin-bottom: 10px; }
+      .cruz { font-size: 1.2em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cruz">✝︎</div>
+  <div class="cruz">✝︎</div>
+  <div class="cruz">✝︎</div>
+  <div class="cruz">✝︎</div>
+
+  <nav>
+    <a class="logo-ab">✝︎ ab</a>
+    <a href="index.html">visiones</a>
+    <a href="music.html">melodías</a>
+    <a href="films.html">luces</a>
+    <a href="artes.html" style="color: #ffadad;">artes</a>
+    <a href="manifiesto.html">manifiesto</a>
+  </nav>
+
+  <main>
+    <h1>artes</h1>
+    <p class="subtitle">collages, dibujos y otras cosas</p>
+    <div id="filtros"></div>
+    <div id="galeria"></div>
+  </main>
+
+  
+  <script src="obras.js"></script>
+  <script>
+    // Más nuevas primero, según la fecha
+    const todas = (typeof obras !== 'undefined' ? obras : []).slice()
+      .sort((a, b) => (b.fecha || '').localeCompare(a.fecha || ''));
+    let visibles = todas;
+    const galeria = document.getElementById('galeria');
+    const filtros = document.getElementById('filtros');
+
+    function pintar() {
+      galeria.innerHTML = '';
+      if (!todas.length) { galeria.innerHTML = '<p class="vacio">todavía no hay obras...</p>'; return; }
+      visibles.forEach((o, i) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'obra';
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.src = o.archivo;
+        img.alt = o.titulo || 'obra';
+        b.appendChild(img);
+        if (o.titulo) {
+          const t = document.createElement('div');
+          t.className = 'tit';
+          t.textContent = o.titulo;
+          b.appendChild(t);
+        }
+        b.onclick = () => abrir(i);
+        galeria.appendChild(b);
+      });
+    }
+
+    // Botones de filtro: salen solos de las técnicas que cargues (collage, dibujo, etc.)
+    const tecnicas = [...new Set(todas.map(o => o.tecnica).filter(Boolean))];
+    if (tecnicas.length > 1) {
+      ['todo', ...tecnicas].forEach(t => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = t;
+        if (t === 'todo') b.classList.add('activo');
+        b.onclick = () => {
+          visibles = t === 'todo' ? todas : todas.filter(o => o.tecnica === t);
+          [...filtros.children].forEach(x => x.classList.toggle('activo', x === b));
+          pintar();
+        };
+        filtros.appendChild(b);
+      });
+    }
+
+    // Visor de imagen
+    let ov = null, idx = 0;
+    function mostrar() {
+      const o = visibles[idx];
+      const img = ov.querySelector('img');
+      img.src = o.archivo;
+      img.alt = o.titulo || '';
+      ov.querySelector('p').textContent = [o.titulo, o.tecnica, o.fecha ? o.fecha.slice(0, 4) : ''].filter(Boolean).join(' · ');
+    }
+    function ir(d) { idx = (idx + d + visibles.length) % visibles.length; mostrar(); }
+    function cerrar() { ov.remove(); ov = null; document.body.style.overflow = ''; }
+    function abrir(i) {
+      idx = i;
+      document.body.style.overflow = 'hidden';
+      ov = document.createElement('div');
+      ov.className = 'visor';
+      ov.innerHTML = '<div class="cerrar">✝︎ cerrar ✝︎</div><div class="flecha izq">⟵</div><div class="flecha der">⟶</div><img alt=""><p></p>';
+      ov.onclick = e => {
+        if (e.target.classList.contains('izq')) ir(-1);
+        else if (e.target.classList.contains('der')) ir(1);
+        else if (e.target.tagName !== 'IMG') cerrar();
+      };
+      document.body.appendChild(ov);
+      mostrar();
+    }
+    document.addEventListener('keydown', e => {
+      if (!ov) return;
+      if (e.key === 'Escape') cerrar();
+      if (e.key === 'ArrowRight') ir(1);
+      if (e.key === 'ArrowLeft') ir(-1);
+    });
+
+    pintar();
+  </script>
+</body>
+</html>

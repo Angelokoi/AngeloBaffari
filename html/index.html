@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
+
     body {
       font-family: 'IBM Plex Mono', monospace;
       color: #000000;
@@ -20,12 +20,11 @@
 
     /* Fondo fijo con pseudo-elemento para móvil */
     body::before {
-      content:'';
+      content: '';
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      height: 100dvh;
       background: url('img/bgphotolowres.png') center/cover no-repeat;
       z-index: -1;
       pointer-events: none;
@@ -67,8 +66,9 @@
       transition: transform 0.4s ease;
     }
     .album:hover { transform: scale(1.03); box-shadow: 0 0 12px rgba(255, 173, 173, 0.2); }
+    .album:focus-visible { outline: 2px solid #ffadad; outline-offset: 3px; }
     .album img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7); transition: filter 0.3s ease; }
-    .album:hover img { filter: brightness(1); }
+    .album:hover img, .album:focus-visible img { filter: brightness(1); }
     .album-title {
       position: absolute;
       bottom: 20px;
@@ -99,42 +99,20 @@
     .cruz:nth-child(4) { bottom: 40px; right: 50px; animation-delay: 3s; }
     @keyframes flotar { 0%,100%{transform:translateY(0) rotate(0deg);opacity:0.7;} 50%{transform:translateY(-12px) rotate(6deg);opacity:1;} }
 
-    /* Ajustes móviles mejorados */
+    @media (prefers-reduced-motion: reduce) { .cruz { animation: none; } }
+
+    /* Ajustes móviles */
     @media (max-width: 768px) {
-      nav {
-        flex-wrap: wrap;
-        gap: 10px;
-        padding: 10px 5px;
-      }
-      main {
-        padding: 20px 15px;
-      }
-      h1 {
-        font-size: 1.8em;
-        margin-bottom: 8px;
-      }
-      p.subtitle {
-        font-size: 1em;
-        margin-bottom: 15px;
-      }
-      .album-grid {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 10px;
-      }
-      .album img {
-        max-height: 200px;
-      }
-      .album-title {
-        font-size: 0.9em;
-        bottom: 8px;
-        left: 8px;
-      }
-      .album-grid .album:nth-child(-n+2) {
-        grid-column: span 1;
-        grid-row: span 1;
-      }
+      nav { flex-wrap: wrap; gap: 10px; padding: 10px 5px; }
+      main { padding: 20px 15px; }
+      h1 { font-size: 1.8em; margin-bottom: 8px; }
+      p.subtitle { font-size: 1em; margin-bottom: 15px; }
+      .album-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+      .album img { max-height: 200px; }
+      .album-title { font-size: 0.9em; bottom: 8px; left: 8px; }
+      .album-grid .album:nth-child(-n+2) { grid-column: span 1; grid-row: span 1; }
     }
-</style>
+  </style>
 </head>
 <body>
 
@@ -147,41 +125,41 @@
     <a class="logo-ab">✝︎ ab</a>
     <a href="index.html" style="color: #ffadad;">visiones</a>
     <a href="music.html">melodías</a>
-    <a href="films.html">luces</a> 
-    <a href="#">artes</a>
+    <a href="films.html">luces</a>
+    <a href="artes.html">artes</a>
     <a href="manifiesto.html">manifiesto</a>
   </nav>
 
   <main>
     <h1>visiones</h1>
-    <p class="subtitle">exploración visual de lo que me rodea. </p>
-        
+    <p class="subtitle">exploración visual de lo que me rodea.</p>
+
     <div class="album-grid">
-      <div class="album" data-album="perracos">
+      <div class="album" data-album="perracos" role="button" tabindex="0">
         <img loading="lazy" src="visiones/perracos/_ANG0736.jpg" alt="perracos">
         <div class="album-title">perracos</div>
       </div>
-      <div class="album" data-album="gorgojo">
+      <div class="album" data-album="gorgojo" role="button" tabindex="0">
         <img loading="lazy" src="img/_ANG0113.png" alt="Gorgojo (10-10-25)">
         <div class="album-title">Gorgojo (10-10-25)</div>
       </div>
-      <div class="album" data-album="puja">
-        <img loading="lazy" src="img/_ANG9246lowres.png" alt="puja (20-9-25)">
+      <div class="album" data-album="puja" role="button" tabindex="0">
+        <img loading="lazy" src="img/_ANG9246lowres.png" alt="Puja (20-9-25)">
         <div class="album-title">Puja (20-9-25)</div>
       </div>
-      <div class="album" data-album="aqui">
-        <img loading="lazy" src="img/_ANG9789lowres.png" alt="aquí (2025)">
+      <div class="album" data-album="aqui" role="button" tabindex="0">
+        <img loading="lazy" src="img/_ANG9789lowres.png" alt="ya estuve acá... (2025)">
         <div class="album-title">ya estuve acá...</div>
       </div>
-      <div class="album" data-album="nota">
+      <div class="album" data-album="nota" role="button" tabindex="0">
         <img loading="lazy" src="img/35lowres.png" alt="El Nota en vivo">
         <div class="album-title">El Nota en vivo</div>
       </div>
-      <div class="album" data-album="Doble Seda">
+      <div class="album" data-album="Doble Seda" role="button" tabindex="0">
         <img loading="lazy" src="img/_ANG3591lowres.png" alt="Doble Seda">
         <div class="album-title">Doble Seda</div>
       </div>
-      <div class="album" data-album="la sombra">
+      <div class="album" data-album="la sombra" role="button" tabindex="0">
         <img loading="lazy" src="img/_ANG1777lowres.png" alt="La sombra de tus ramas">
         <div class="album-title">La sombra de tus ramas</div>
       </div>
@@ -199,102 +177,115 @@ const albums = {
   "puja":[ "visiones/puja/_ANG9246.jpg","visiones/puja/_ANG8832.jpg","visiones/puja/_ANG8975.jpg","visiones/puja/_ANG8983.jpg","visiones/puja/_ANG9260.jpg","visiones/puja/_ANG9555-2.jpg","visiones/puja/_ANG9095.jpg","visiones/puja/_ANG9572.jpg","visiones/puja/_ANG9203.jpg","visiones/puja/_ANG9077.jpg","visiones/puja/_ANG9273.jpg","visiones/puja/_ANG8934.jpg","visiones/puja/_ANG8835.jpg","visiones/puja/_ANG9568.jpg" ]
 };
 
-const albumsDOM = Array.from(document.querySelectorAll('.album'));
+function openOverlay(album) {
+  const imgs = albums[album.dataset.album];
+  if (!imgs) return;
 
-albumsDOM.forEach(album => {
-  let touchStartX=0,touchStartY=0,moved=false;
+  let index = 0;
+  let closed = false;
+  document.body.style.overflow = 'hidden';
 
-  const openOverlay = () => {
-    const key = album.dataset.album;
-    const imgs = albums[key];
-    if(!imgs) return;
+  const overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:rgba(10,10,10,0.96);opacity:0;transition:opacity 0.3s ease;z-index:1000;';
 
-    let index = 0;
-    window.scrollTo({top:0,behavior:"instant"});
-    document.body.style.overflow='hidden';
+  const imgEl = document.createElement('img');
+  imgEl.src = imgs[0];
+  imgEl.alt = album.querySelector('.album-title').textContent;
+  imgEl.style.cssText = 'max-width:90vw; max-height:80vh; object-fit:contain; border-radius:10px; filter:blur(6px); opacity:0; transition:opacity 0.3s ease, filter 0.3s ease;';
+  overlay.appendChild(imgEl);
 
-    const overlay = document.createElement('div');
-    overlay.style.cssText=`position:fixed;top:0;left:0;width:100vw;height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:rgba(10,10,10,0.96);opacity:0;transition:opacity 0.3s ease;z-index:1000;`;
+  // Flechas
+  const prev = document.createElement('div');
+  const next = document.createElement('div');
+  prev.textContent = '⟵'; next.textContent = '⟶';
+  [prev, next].forEach(btn => { btn.style.cssText = 'position:fixed;top:50%;transform:translateY(-50%);font-size:2em;color:#ffc6c6;cursor:pointer;user-select:none;z-index:1001;'; });
+  prev.style.left = '20px'; next.style.right = '20px';
+  overlay.append(prev, next);
 
-    const imgEl = document.createElement('img');
-    imgEl.src=imgs[index];
-    imgEl.style.cssText=`max-width:90vw; max-height:80vh; object-fit:contain; border-radius:10px; filter:blur(6px); opacity:0; transition:opacity 0.3s ease, filter 0.3s ease;`;
-    overlay.appendChild(imgEl);
+  // Botón cerrar
+  const closeBtn = document.createElement('div');
+  closeBtn.textContent = '✝︎ cerrar ✝︎';
+  closeBtn.style.cssText = 'position:fixed;top:20px;right:30px;color:#ffc6c6;cursor:pointer;font-size:1.2em;z-index:1001;';
+  overlay.appendChild(closeBtn);
 
-    // Flechas
-    const prev = document.createElement('div');
-    const next = document.createElement('div');
-    prev.textContent='⟵'; next.textContent='⟶';
-    [prev,next].forEach(btn=>{ btn.style.cssText='position:fixed;top:50%;transform:translateY(-50%);font-size:2em;color:#ffc6c6;cursor:pointer;user-select:none;z-index:1001;transition:opacity 0.2s;'; });
-    prev.style.left='20px'; next.style.right='20px';
-    overlay.append(prev,next);
+  // Aviso para deslizar (solo móvil)
+  if (window.innerWidth < 768) {
+    const hint = document.createElement('div');
+    hint.textContent = '⟷ deslizar para cambiar ⟷';
+    hint.style.cssText = 'position:absolute;bottom:45px;color:#ccc;font-size:1em;opacity:0.7;';
+    overlay.appendChild(hint);
+  }
 
-    // Botón cerrar
-    const closeBtn = document.createElement('div');
-    closeBtn.textContent='✝︎ cerrar ✝︎';
-    closeBtn.style.cssText='position:fixed;top:20px;right:30px;color:#ffc6c6;cursor:pointer;font-size:1.2em;z-index:1001;';
-    overlay.appendChild(closeBtn);
+  // Puntos indicadores
+  const indicator = document.createElement('div');
+  indicator.style.cssText = 'position:fixed; bottom:20px; display:flex; gap:5px; justify-content:center; width:100%; z-index:1002;';
+  imgs.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.style.cssText = 'width:8px; height:8px; border-radius:50%; background:' + (i === 0 ? '#ffc6c6' : '#555') + ';';
+    indicator.appendChild(dot);
+  });
+  overlay.appendChild(indicator);
 
-    // Hint móvil
-    const mobileHint = document.createElement('div');
-    mobileHint.textContent='⟷ deslizar para cambiar ⟷';
-    mobileHint.style.cssText=`position:absolute;bottom:25px;color:#ccc;font-size:1em;opacity:0.7;display:${window.innerWidth<768?'block':'none'};`;
-    overlay.appendChild(mobileHint);
+  const show = i => {
+    index = (i + imgs.length) % imgs.length;
+    imgEl.src = imgs[index];
+    indicator.childNodes.forEach((dot, n) => dot.style.background = n === index ? '#ffc6c6' : '#555');
+  };
+  prev.onclick = () => show(index - 1);
+  next.onclick = () => show(index + 1);
 
-    // Indicadores de posición
-    const indicator = document.createElement('div');
-    indicator.style.cssText='position:fixed; bottom:20px; display:flex; gap:5px; justify-content:center; width:100%; z-index:1002;';
-    imgs.forEach((_,i)=>{
-      const dot = document.createElement('div');
-      dot.style.cssText='width:8px; height:8px; border-radius:50%; background:#555;';
-      if(i===0) dot.style.background='#ffc6c6';
-      indicator.appendChild(dot);
-    });
-    overlay.appendChild(indicator);
+  // Deslizar con el dedo (se reinicia en cada toque, así un toque suelto no cambia la foto)
+  let startX = 0, endX = 0;
+  imgEl.addEventListener('touchstart', e => { startX = endX = e.touches[0].clientX; });
+  imgEl.addEventListener('touchmove', e => { endX = e.touches[0].clientX; });
+  imgEl.addEventListener('touchend', () => {
+    const diff = endX - startX;
+    if (Math.abs(diff) > 50) diff > 0 ? prev.onclick() : next.onclick();
+  });
 
-    const updateIndicator = idx => {
-      indicator.childNodes.forEach((dot,i)=>dot.style.background=i===idx?'#ffc6c6':'#555');
-    };
-
-    document.body.appendChild(overlay);
-    setTimeout(()=>{ overlay.style.opacity='1'; imgEl.style.opacity='1'; imgEl.style.filter='blur(0)'; },50);
-
-    const closeOverlay=()=>{
-      overlay.style.opacity='0';
-      imgEl.style.opacity='0';
-      imgEl.style.filter='blur(5px)';
-      setTimeout(()=>{
-        overlay.remove();
-        document.body.style.overflow='';
-        if(history.state && history.state.overlay) history.back();
-      },300);
-    };
-    closeBtn.onclick=closeOverlay;
-
-    prev.onclick=()=>{ index=(index-1+imgs.length)%imgs.length; imgEl.src=imgs[index]; updateIndicator(index); };
-    next.onclick=()=>{ index=(index+1)%imgs.length; imgEl.src=imgs[index]; updateIndicator(index); };
-
-    let startX=0,endX=0;
-    imgEl.addEventListener('touchstart',e=>startX=e.touches[0].clientX);
-    imgEl.addEventListener('touchmove',e=>endX=e.touches[0].clientX);
-    imgEl.addEventListener('touchend',()=>{ const diff=endX-startX; if(Math.abs(diff)>50) diff>0?prev.onclick():next.onclick(); });
-
-    document.addEventListener('keydown',e=>{
-      if(!document.body.contains(overlay)) return;
-      if(e.key==='ArrowRight') next.onclick();
-      if(e.key==='ArrowLeft') prev.onclick();
-      if(e.key==='Escape') closeOverlay();
-    });
-
-    history.pushState({overlay:true}, '');
-    const popHandler = ()=>{ if(document.body.contains(overlay)) { closeOverlay(); window.removeEventListener('popstate',popHandler); } };
-    window.addEventListener('popstate', popHandler);
+  // Cerrar de verdad (se llama una sola vez y limpia todo lo que abrió)
+  const close = () => {
+    if (closed) return;
+    closed = true;
+    document.removeEventListener('keydown', onKey);
+    window.removeEventListener('popstate', close);
+    overlay.style.opacity = '0';
+    imgEl.style.opacity = '0';
+    imgEl.style.filter = 'blur(5px)';
+    setTimeout(() => {
+      overlay.remove();
+      document.body.style.overflow = '';
+    }, 300);
   };
 
-  album.addEventListener('touchstart',e=>{ touchStartX=e.touches[0].clientX; touchStartY=e.touches[0].clientY; moved=false; });
-  album.addEventListener('touchmove',e=>{ const dx=Math.abs(e.touches[0].clientX-touchStartX); const dy=Math.abs(e.touches[0].clientY-touchStartY); if(dx>10 || dy>10) moved=true; });
-  album.addEventListener('touchend',e=>{ if(!moved) openOverlay(); });
-  album.addEventListener('click',e=>{ if(!moved) openOverlay(); });
+  // Pedir cierre: si hay una entrada de historial del visor, volvemos atrás y popstate llama a close
+  const requestClose = () => {
+    if (history.state && history.state.overlay) history.back();
+    else close();
+  };
+
+  const onKey = e => {
+    if (e.key === 'ArrowRight') next.onclick();
+    if (e.key === 'ArrowLeft') prev.onclick();
+    if (e.key === 'Escape') requestClose();
+  };
+
+  closeBtn.onclick = requestClose;
+  document.addEventListener('keydown', onKey);
+  window.addEventListener('popstate', close);
+  history.pushState({ overlay: true }, '');
+
+  document.body.appendChild(overlay);
+  setTimeout(() => { overlay.style.opacity = '1'; imgEl.style.opacity = '1'; imgEl.style.filter = 'blur(0)'; }, 50);
+}
+
+document.querySelectorAll('.album').forEach(album => {
+  // "click" cubre mouse y toque (y no se dispara si el dedo estaba haciendo scroll)
+  album.addEventListener('click', () => openOverlay(album));
+  // Teclado: Enter o espacio abren el álbum
+  album.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openOverlay(album); }
+  });
 });
 </script>
 
