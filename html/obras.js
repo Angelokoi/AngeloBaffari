@@ -26,7 +26,7 @@ const obras = [
     archivo: "arte/solonecesitounangel.png",
     fecha: "28-10-2025",
     titulo: "Sólo necesito un ángel",
-    tecnica: "digital collage"
+    tecnica: "photography & collage"
   },
 
 

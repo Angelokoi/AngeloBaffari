@@ -19,7 +19,7 @@
 const textos = [
   {
     fecha: "2026-10-15",
-    tipo: "texto",
+    tipo: "texto, ficción",
     titulo: "Bajo el sol veo lagunas por doquier.",
     texto: `“Solo necesito un ángel”.
 Esas fueron las primeras palabras que brotaron de su pecho al nacer.
@@ -42,6 +42,21 @@ Se transforma en un show luminoso de una belleza inexplicable.
 Una luz que responde al llamado.
 
 Gracias. 
+`
+  },
+
+  {
+    fecha: "2026-10-14",
+    tipo: "texto",
+    titulo: "Presentación",
+    texto: `Soy Angelo Baffari, músico y cineasta, vivo en la ciudad de Córdoba, Argentina.
+Soy guitarrista, cantante, y el compositor principal de mi banda "Sólo necesito un ángel".
+En esta página podrán encontrar mis obras, como lo son mis fotografías, mis proyectos audiovisuales o mi música, y en este apartado leerán los vómitos de texto que iré subiendo a medida que vayan llegando a mi cabeza.
+En lo que respecta al arte tengo una tendencia a encontrarme en lo novedoso, lo diferente, aquellas zonas que siguen hoy sin explorar, me gusta expresar la sensibilidad del cuerpo ante la belleza y las maldades de este mundo, con una mirada crítica hacia dentro y hacia afuera.
+
+Creo que el amor permanece como una de las fuerzas más importantes para afrontar los problemas, pero no hay que caer en lo cursi ni esperar que actúe por sí solo.
+
+Nos vemos.
 `
   },
 
