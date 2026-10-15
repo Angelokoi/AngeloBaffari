@@ -20,10 +20,20 @@
   },
 */
 const obras = [
+ 
+ 
+  {
+    archivo: "arte/solonecesitounangel.png",
+    fecha: "28-10-2025",
+    titulo: "Sólo necesito un ángel",
+    tecnica: "digital collage"
+  },
+
+
  {
     archivo: "arte/escabiation day.png",
-    fecha: "2026-10-15",
-    titulo: "nombre de la obra",
+    fecha: "06-07-2026",
+    titulo: "Escabiation day",
     tecnica: "digital collage"
   },
 
