@@ -21,12 +21,19 @@
 */
 const obras = [
  
+  {
+    archivo: "arte/50 reels.jpg",
+    fecha: "16-10-26",
+    titulo: "50 reels",
+    tecnica: "collage"
+  },
+
  
   {
     archivo: "arte/solonecesitounangel.png",
     fecha: "28-10-2025",
     titulo: "Sólo necesito un ángel",
-    tecnica: "photography & collage"
+    tecnica: "collage"
   },
 
 
@@ -34,7 +41,7 @@ const obras = [
     archivo: "arte/escabiation day.png",
     fecha: "06-07-2026",
     titulo: "Escabiation day",
-    tecnica: "digital collage"
+    tecnica: "collage"
   },
 
 ];
