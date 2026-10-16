@@ -18,7 +18,6 @@
       overflow-x: hidden;
     }
 
-    /* Fondo fijo con pseudo-elemento para móvil */
     body::before {
       content: '';
       position: fixed;
@@ -77,12 +76,31 @@
       font-size: 1.5em;
       text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
     }
+    .album-grid .album:nth-child(-n+2) { grid-column: span 2; grid-row: span 2; }
+    .vacio { color: #ccc; }
 
-    /* Más recientes más grandes */
-    .album-grid .album:nth-child(-n+2) {
-      grid-column: span 2;
-      grid-row: span 2;
+    /* Visor */
+    .visor {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100dvh;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      background: rgba(10,10,10,0.96);
+      z-index: 1000;
+      opacity: 0; transition: opacity 0.3s ease;
     }
+    .visor.on { opacity: 1; }
+    .visor img { max-width: 90vw; max-height: 72vh; object-fit: contain; border-radius: 10px; transition: opacity 0.3s ease; }
+    .visor .cap { margin-top: 14px; padding: 0 20px 24px; text-align: center; color: #ccc; font-size: 0.9em; line-height: 1.5; max-width: 700px; }
+    .visor .cap strong { display: block; color: #fcd5ce; font-weight: 500; font-size: 1.1em; }
+    .visor .cap span { display: block; }
+    .visor .cap .pie { color: #b8f2e6; margin-top: 4px; }
+    .visor .cerrar { position: fixed; top: 20px; right: 30px; color: #ffc6c6; cursor: pointer; font-size: 1.2em; z-index: 2; }
+    .visor .flecha { position: fixed; top: 50%; transform: translateY(-50%); font-size: 2em; color: #ffc6c6; cursor: pointer; user-select: none; padding: 10px; z-index: 2; }
+    .visor .izq { left: 10px; }
+    .visor .der { right: 10px; }
+    .visor .puntos { position: fixed; bottom: 14px; display: flex; gap: 5px; justify-content: center; width: 100%; flex-wrap: wrap; padding: 0 20px; }
+    .visor .puntos i { width: 8px; height: 8px; border-radius: 50%; background: #555; }
+    .visor .puntos i.act { background: #ffc6c6; }
+    .visor .aviso { position: fixed; top: 24px; left: 16px; color: #ccc; font-size: 0.8em; opacity: 0.7; }
 
     .cruz {
       position: fixed;
@@ -98,10 +116,8 @@
     .cruz:nth-child(3) { bottom: 50px; left: 60px; animation-delay: 2s; }
     .cruz:nth-child(4) { bottom: 40px; right: 50px; animation-delay: 3s; }
     @keyframes flotar { 0%,100%{transform:translateY(0) rotate(0deg);opacity:0.7;} 50%{transform:translateY(-12px) rotate(6deg);opacity:1;} }
-
     @media (prefers-reduced-motion: reduce) { .cruz { animation: none; } }
 
-    /* Ajustes móviles */
     @media (max-width: 768px) {
       nav { flex-wrap: wrap; gap: 10px; padding: 10px 5px; }
       main { padding: 20px 15px; }
@@ -133,161 +149,116 @@
   <main>
     <h1>visiones</h1>
     <p class="subtitle">exploración visual de lo que me rodea.</p>
-
-    <div class="album-grid">
-      <div class="album" data-album="perracos" role="button" tabindex="0">
-        <img loading="lazy" src="visiones/perracos/_ANG0736.jpg" alt="perracos">
-        <div class="album-title">perracos</div>
-      </div>
-      <div class="album" data-album="gorgojo" role="button" tabindex="0">
-        <img loading="lazy" src="img/_ANG0113.png" alt="Gorgojo (10-10-25)">
-        <div class="album-title">Gorgojo (10-10-25)</div>
-      </div>
-      <div class="album" data-album="puja" role="button" tabindex="0">
-        <img loading="lazy" src="img/_ANG9246lowres.png" alt="Puja (20-9-25)">
-        <div class="album-title">Puja (20-9-25)</div>
-      </div>
-      <div class="album" data-album="aqui" role="button" tabindex="0">
-        <img loading="lazy" src="img/_ANG9789lowres.png" alt="ya estuve acá... (2025)">
-        <div class="album-title">ya estuve acá...</div>
-      </div>
-      <div class="album" data-album="nota" role="button" tabindex="0">
-        <img loading="lazy" src="img/35lowres.png" alt="El Nota en vivo">
-        <div class="album-title">El Nota en vivo</div>
-      </div>
-      <div class="album" data-album="Doble Seda" role="button" tabindex="0">
-        <img loading="lazy" src="img/_ANG3591lowres.png" alt="Doble Seda">
-        <div class="album-title">Doble Seda</div>
-      </div>
-      <div class="album" data-album="la sombra" role="button" tabindex="0">
-        <img loading="lazy" src="img/_ANG1777lowres.png" alt="La sombra de tus ramas">
-        <div class="album-title">La sombra de tus ramas</div>
-      </div>
-    </div>
+    <div class="album-grid" id="grilla"></div>
   </main>
 
-<script>
-const albums = {
-"perracos": ["visiones/perracos/_ANG0686.jpg", "visiones/perracos/_ANG0687.jpg", "visiones/perracos/_ANG0689.jpg", "visiones/perracos/_ANG0691.jpg", "visiones/perracos/_ANG0692.jpg", "visiones/perracos/_ANG0695.jpg", "visiones/perracos/_ANG0697.jpg", "visiones/perracos/_ANG0698.jpg", "visiones/perracos/_ANG0699.jpg", "visiones/perracos/_ANG0711.jpg", "visiones/perracos/_ANG0718.jpg", "visiones/perracos/_ANG0721.jpg", "visiones/perracos/_ANG0736.jpg" ],
-  "nota":[ "visiones/El nota/img/35.jpg","visiones/El nota/img/1.jpg","visiones/El nota/img/2.jpg","visiones/El nota/img/3.jpg","visiones/El nota/img/4.jpg","visiones/El nota/img/8.jpg","visiones/El nota/img/9.jpg","visiones/El nota/img/12.jpg","visiones/El nota/img/13.jpg","visiones/El nota/img/15.jpg","visiones/El nota/img/17.jpg","visiones/El nota/img/21.jpg","visiones/El nota/img/24.jpg","visiones/El nota/img/27.jpg","visiones/El nota/img/31.jpg","visiones/El nota/img/33.jpg","visiones/El nota/img/41.jpg" ],
-  "Doble Seda":[ "visiones/Doble seda/img/_ANG3591.jpg","visiones/Doble seda/img/_ANG3487.jpg","visiones/Doble seda/img/_ANG3502.jpg","visiones/Doble seda/img/_ANG3504.jpg","visiones/Doble seda/img/_ANG3506.jpg","visiones/Doble seda/img/_ANG3513.jpg","visiones/Doble seda/img/_ANG3509.jpg","visiones/Doble seda/img/_ANG3540.jpg","visiones/Doble seda/img/_ANG3545.jpg","visiones/Doble seda/img/_ANG3553.jpg","visiones/Doble seda/img/_ANG3592.jpg" ],
-  "la sombra":[ "visiones/Naturaleza/img/_ANG1777.jpg","visiones/Naturaleza/img/_ANG6916.jpg","visiones/Naturaleza/img/_ANG7016.jpg" ],
-  "gorgojo":[ "visiones/gorgojo/_ANG0113.jpg","visiones/gorgojo/_ANG0067.jpg","visiones/gorgojo/_ANG0128.jpg","visiones/gorgojo/_ANG9926.jpg","visiones/gorgojo/_ANG0135.jpg","visiones/gorgojo/_ANG0149.jpg","visiones/gorgojo/_ANG0196.jpg","visiones/gorgojo/_ANG0329.jpg","visiones/gorgojo/_ANG0216.jpg","visiones/gorgojo/_ANG0376.jpg","visiones/gorgojo/_ANG0421.jpg" ],
-  "aqui":[ "visiones/aqui/_ANG9789.jpg","visiones/aqui/_ANG9802.jpg","visiones/aqui/_ANG9805.jpg","visiones/aqui/_ANG9806.jpg","visiones/aqui/_ANG9811.jpg","visiones/aqui/_ANG9826.jpg","visiones/aqui/_ANG9833.jpg","visiones/aqui/_ANG9838.jpg","visiones/aqui/_ANG9858.jpg","visiones/aqui/_ANG9864.jpg","visiones/aqui/_ANG9876.jpg","visiones/aqui/_ANG9887.jpg","visiones/aqui/_ANG9892.jpg" ],
-  "puja":[ "visiones/puja/_ANG9246.jpg","visiones/puja/_ANG8832.jpg","visiones/puja/_ANG8975.jpg","visiones/puja/_ANG8983.jpg","visiones/puja/_ANG9260.jpg","visiones/puja/_ANG9555-2.jpg","visiones/puja/_ANG9095.jpg","visiones/puja/_ANG9572.jpg","visiones/puja/_ANG9203.jpg","visiones/puja/_ANG9077.jpg","visiones/puja/_ANG9273.jpg","visiones/puja/_ANG8934.jpg","visiones/puja/_ANG8835.jpg","visiones/puja/_ANG9568.jpg" ]
-};
+  <!-- Los álbumes se agregan en el archivo visiones.js -->
+  <script src="visiones.js"></script>
+  <script>
+    // Más nuevos primero: en el orden del archivo, o por fecha si TODOS tienen "fecha"
+    let lista = (typeof visiones !== 'undefined' ? visiones : []).filter(a => a.fotos && a.fotos.length);
+    if (lista.length && lista.every(a => a.fecha)) {
+      lista = lista.slice().sort((a, b) => b.fecha.localeCompare(a.fecha));
+    }
 
-function openOverlay(album) {
-  const imgs = albums[album.dataset.album];
-  if (!imgs) return;
+    // Ruta de una foto: si es solo el nombre del archivo, se le agrega la carpeta del álbum
+    function ruta(a, f) {
+      const arch = typeof f === 'string' ? f : f.archivo;
+      const carp = a.carpeta ? a.carpeta.replace(/\/?$/, '/') : '';
+      return (carp && arch.indexOf('/') === -1) ? carp + arch : arch;
+    }
 
-  let index = 0;
-  let closed = false;
-  document.body.style.overflow = 'hidden';
+    const grilla = document.getElementById('grilla');
+    if (!lista.length) grilla.innerHTML = '<p class="vacio">todavía no hay álbumes...</p>';
 
-  const overlay = document.createElement('div');
-  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100vw;height:100dvh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:rgba(10,10,10,0.96);opacity:0;transition:opacity 0.3s ease;z-index:1000;';
+    lista.forEach(a => {
+      const card = document.createElement('div');
+      card.className = 'album';
+      card.setAttribute('role', 'button');
+      card.tabIndex = 0;
+      const img = document.createElement('img');
+      img.loading = 'lazy';
+      img.src = a.portada || ruta(a, a.fotos[0]);
+      img.alt = a.titulo || 'álbum';
+      const t = document.createElement('div');
+      t.className = 'album-title';
+      t.textContent = a.titulo || '';
+      card.append(img, t);
+      card.addEventListener('click', () => abrir(a));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrir(a); }
+      });
+      grilla.appendChild(card);
+    });
 
-  const imgEl = document.createElement('img');
-  imgEl.src = imgs[0];
-  imgEl.alt = album.querySelector('.album-title').textContent;
-  imgEl.style.cssText = 'max-width:90vw; max-height:80vh; object-fit:contain; border-radius:10px; filter:blur(6px); opacity:0; transition:opacity 0.3s ease, filter 0.3s ease;';
-  overlay.appendChild(imgEl);
-
-  // Flechas
-  const prev = document.createElement('div');
-  const next = document.createElement('div');
-  prev.textContent = '⟵'; next.textContent = '⟶';
-  [prev, next].forEach(btn => { btn.style.cssText = 'position:fixed;top:50%;transform:translateY(-50%);font-size:2em;color:#ffc6c6;cursor:pointer;user-select:none;z-index:1001;'; });
-  prev.style.left = '20px'; next.style.right = '20px';
-  overlay.append(prev, next);
-
-  // Botón cerrar
-  const closeBtn = document.createElement('div');
-  closeBtn.textContent = '✝︎ cerrar ✝︎';
-  closeBtn.style.cssText = 'position:fixed;top:20px;right:30px;color:#ffc6c6;cursor:pointer;font-size:1.2em;z-index:1001;';
-  overlay.appendChild(closeBtn);
-
-  // Aviso para deslizar (solo móvil)
-  if (window.innerWidth < 768) {
-    const hint = document.createElement('div');
-    hint.textContent = '⟷ deslizar para cambiar ⟷';
-    hint.style.cssText = 'position:absolute;bottom:45px;color:#ccc;font-size:1em;opacity:0.7;';
-    overlay.appendChild(hint);
-  }
-
-  // Puntos indicadores
-  const indicator = document.createElement('div');
-  indicator.style.cssText = 'position:fixed; bottom:20px; display:flex; gap:5px; justify-content:center; width:100%; z-index:1002;';
-  imgs.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.style.cssText = 'width:8px; height:8px; border-radius:50%; background:' + (i === 0 ? '#ffc6c6' : '#555') + ';';
-    indicator.appendChild(dot);
-  });
-  overlay.appendChild(indicator);
-
-  const show = i => {
-    index = (i + imgs.length) % imgs.length;
-    imgEl.src = imgs[index];
-    indicator.childNodes.forEach((dot, n) => dot.style.background = n === index ? '#ffc6c6' : '#555');
-  };
-  prev.onclick = () => show(index - 1);
-  next.onclick = () => show(index + 1);
-
-  // Deslizar con el dedo (se reinicia en cada toque, así un toque suelto no cambia la foto)
-  let startX = 0, endX = 0;
-  imgEl.addEventListener('touchstart', e => { startX = endX = e.touches[0].clientX; });
-  imgEl.addEventListener('touchmove', e => { endX = e.touches[0].clientX; });
-  imgEl.addEventListener('touchend', () => {
-    const diff = endX - startX;
-    if (Math.abs(diff) > 50) diff > 0 ? prev.onclick() : next.onclick();
-  });
-
-  // Cerrar de verdad (se llama una sola vez y limpia todo lo que abrió)
-  const close = () => {
-    if (closed) return;
-    closed = true;
-    document.removeEventListener('keydown', onKey);
-    window.removeEventListener('popstate', close);
-    overlay.style.opacity = '0';
-    imgEl.style.opacity = '0';
-    imgEl.style.filter = 'blur(5px)';
-    setTimeout(() => {
-      overlay.remove();
-      document.body.style.overflow = '';
-    }, 300);
-  };
-
-  // Pedir cierre: si hay una entrada de historial del visor, volvemos atrás y popstate llama a close
-  const requestClose = () => {
-    if (history.state && history.state.overlay) history.back();
-    else close();
-  };
-
-  const onKey = e => {
-    if (e.key === 'ArrowRight') next.onclick();
-    if (e.key === 'ArrowLeft') prev.onclick();
-    if (e.key === 'Escape') requestClose();
-  };
-
-  closeBtn.onclick = requestClose;
-  document.addEventListener('keydown', onKey);
-  window.addEventListener('popstate', close);
-  history.pushState({ overlay: true }, '');
-
-  document.body.appendChild(overlay);
-  setTimeout(() => { overlay.style.opacity = '1'; imgEl.style.opacity = '1'; imgEl.style.filter = 'blur(0)'; }, 50);
-}
-
-document.querySelectorAll('.album').forEach(album => {
-  // "click" cubre mouse y toque (y no se dispara si el dedo estaba haciendo scroll)
-  album.addEventListener('click', () => openOverlay(album));
-  // Teclado: Enter o espacio abren el álbum
-  album.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openOverlay(album); }
-  });
-});
-</script>
+    // Visor
+    let ov = null, cerrado = true, album = null, idx = 0;
+    function mostrar(i) {
+      idx = (i + album.fotos.length) % album.fotos.length;
+      const f = album.fotos[idx];
+      const img = ov.querySelector('img');
+      img.style.opacity = 0;
+      img.onload = img.onerror = () => { img.style.opacity = 1; };
+      img.src = ruta(album, f);
+      ov.querySelector('.pie').textContent = (typeof f === 'object' && f.pie) || '';
+      [...ov.querySelector('.puntos').children].forEach((d, n) => d.classList.toggle('act', n === idx));
+    }
+    function cerrar() {
+      if (cerrado) return;
+      cerrado = true;
+      window.removeEventListener('popstate', cerrar);
+      const o = ov;
+      o.classList.remove('on');
+      setTimeout(() => { o.remove(); document.body.style.overflow = ''; }, 300);
+    }
+    function pedirCierre() {
+      if (history.state && history.state.visor) history.back(); else cerrar();
+    }
+    function abrir(a) {
+      album = a;
+      cerrado = false;
+      document.body.style.overflow = 'hidden';
+      ov = document.createElement('div');
+      ov.className = 'visor';
+      ov.innerHTML = '<div class="cerrar">✝︎ cerrar ✝︎</div><div class="flecha izq">⟵</div><div class="flecha der">⟶</div>' +
+        '<img alt=""><div class="cap"><strong></strong><span class="sub"></span><span class="pie"></span></div><div class="puntos"></div>';
+      ov.querySelector('strong').textContent = a.titulo || '';
+      ov.querySelector('.sub').textContent = a.subtitulo || '';
+      ov.querySelector('img').alt = a.titulo || '';
+      a.fotos.forEach(() => ov.querySelector('.puntos').appendChild(document.createElement('i')));
+      if (window.innerWidth < 768) {
+        const av = document.createElement('div');
+        av.className = 'aviso';
+        av.textContent = '⟷ deslizar para cambiar';
+        ov.appendChild(av);
+      }
+      ov.onclick = e => {
+        if (e.target.classList.contains('izq')) mostrar(idx - 1);
+        else if (e.target.classList.contains('der')) mostrar(idx + 1);
+        else if (e.target.classList.contains('cerrar')) pedirCierre();
+      };
+      // Deslizar con el dedo (se reinicia en cada toque)
+      let x0 = 0, x1 = 0;
+      const im = ov.querySelector('img');
+      im.addEventListener('touchstart', e => { x0 = x1 = e.touches[0].clientX; });
+      im.addEventListener('touchmove', e => { x1 = e.touches[0].clientX; });
+      im.addEventListener('touchend', () => {
+        const d = x1 - x0;
+        if (Math.abs(d) > 50) mostrar(d > 0 ? idx - 1 : idx + 1);
+      });
+      document.body.appendChild(ov);
+      mostrar(0);
+      setTimeout(() => ov.classList.add('on'), 20);
+      history.pushState({ visor: true }, '');
+      window.addEventListener('popstate', cerrar);
+    }
+    document.addEventListener('keydown', e => {
+      if (cerrado) return;
+      if (e.key === 'Escape') pedirCierre();
+      if (e.key === 'ArrowRight') mostrar(idx + 1);
+      if (e.key === 'ArrowLeft') mostrar(idx - 1);
+    });
+  </script>
 
 </body>
 </html>

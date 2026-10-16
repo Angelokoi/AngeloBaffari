@@ -117,6 +117,21 @@
     }
     .bloque:hover .icono, .bloque:focus-visible .icono { opacity: 0.6; transform: scale(1.06) rotate(-3deg); }
 
+    /* Reproductores embebidos */
+    .reproductores {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+    .reproductor {
+      border: 1px solid #444;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(30,30,30,0.6);
+    }
+    .reproductor iframe { display: block; width: 100%; border: 0; }
+
     /* Links que todavía no tienen dirección */
     .bloque.pronto { opacity: 0.45; cursor: default; animation: none; }
     .bloque.pronto:hover { color: #b8f2e6; border-color: #444; box-shadow: none; }
@@ -210,12 +225,20 @@
           <strong>Instagram</strong><span>seguir a la banda</span>
         </a>
       </div>
+      <div class="reproductores">
+        <div class="reproductor" data-soundcloud="https://soundcloud.com/solonecesitounangel"></div>
+        <!--
+          Para sumar Spotify, copiá la línea siguiente, pegala FUERA de este comentario y cambiá LINK por el link (artista, álbum o canción):
+          <div class="reproductor" data-spotify="LINK"></div>
+          Para sumar un video de YouTube:
+          <div class="reproductor" data-youtube="LINK"></div>
+        -->
+      </div>
     </section>
 
     <!-- SOLISTA -->
     <section>
       <div class="encabezado">
-      <img class="logo-banda" src="img/gatito snua.png" alt="Sólo necesito un ángel">
         <div>
           <h2>angelokoii</h2>
           <p class="desc">Solista.</p>
@@ -235,6 +258,10 @@
           <strong>Instagram</strong><span>seguir</span>
         </a>
       </div>
+      <div class="reproductores">
+        <div class="reproductor" data-soundcloud="https://soundcloud.com/angelokoii"></div>
+        <!-- Para sumar Spotify o YouTube, copiá el ejemplo del bloque de la banda -->
+      </div>
     </section>
   </main>
 
@@ -247,6 +274,31 @@
         b.querySelector('span').textContent = 'próximamente';
         b.addEventListener('click', function (e) { e.preventDefault(); });
       }
+    });
+  </script>
+  <script>
+    // Arma cada reproductor a partir del link (SoundCloud, Spotify o YouTube)
+    document.querySelectorAll('.reproductor').forEach(function (el) {
+      var d = el.dataset, src = '', alto = 300;
+      if (d.soundcloud && d.soundcloud.indexOf('http') === 0) {
+        src = 'https://w.soundcloud.com/player/?url=' + encodeURIComponent(d.soundcloud) +
+              '&color=%23ffadad&auto_play=false&hide_related=true&show_comments=false&visual=false';
+      } else if (d.spotify && d.spotify.indexOf('http') === 0) {
+        src = d.spotify.replace(/\/intl-[a-z-]+\//, '/').split('?')[0]
+                       .replace('open.spotify.com/', 'open.spotify.com/embed/');
+        alto = d.spotify.indexOf('/track/') > -1 ? 152 : 352;
+      } else if (d.youtube && d.youtube.indexOf('http') === 0) {
+        var m = d.youtube.match(/(?:v=|youtu\.be\/|embed\/)([\w-]{11})/);
+        if (m) { src = 'https://www.youtube.com/embed/' + m[1]; el.style.aspectRatio = '16 / 9'; alto = null; }
+      }
+      if (!src) { el.remove(); return; }   // sin link válido, no se muestra
+      var f = document.createElement('iframe');
+      f.src = src;
+      f.loading = 'lazy';
+      f.title = 'Reproductor';
+      f.allow = 'autoplay; encrypted-media; fullscreen; clipboard-write';
+      f.style.height = alto ? alto + 'px' : '100%';
+      el.appendChild(f);
     });
   </script>
 </body>
