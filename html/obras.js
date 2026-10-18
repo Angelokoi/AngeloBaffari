@@ -20,10 +20,18 @@
   },
 */
 const obras = [
- 
+  
+    {
+    archivo: "arte/100 reels.jpg",
+    fecha: "2026-10-17",
+    titulo: "50 reels",
+    tecnica: "collage"
+  },
+
+
   {
     archivo: "arte/50 reels.jpg",
-    fecha: "16-10-26",
+    fecha: "2026-10-16",
     titulo: "50 reels",
     tecnica: "collage"
   },
@@ -31,7 +39,7 @@ const obras = [
  
   {
     archivo: "arte/solonecesitounangel.png",
-    fecha: "28-10-2025",
+    fecha: "2026-10-28",
     titulo: "Sólo necesito un ángel",
     tecnica: "collage"
   },
@@ -39,7 +47,7 @@ const obras = [
 
  {
     archivo: "arte/escabiation day.png",
-    fecha: "06-07-2026",
+    fecha: "2026-07-06",
     titulo: "Escabiation day",
     tecnica: "collage"
   },
