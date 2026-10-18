@@ -39,7 +39,7 @@ const obras = [
  
   {
     archivo: "arte/solonecesitounangel.png",
-    fecha: "2026-10-28",
+    fecha: "2026-10-08",
     titulo: "Sólo necesito un ángel",
     tecnica: "collage"
   },
