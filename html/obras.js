@@ -24,7 +24,7 @@ const obras = [
     {
     archivo: "arte/100 reels.jpg",
     fecha: "2026-10-17",
-    titulo: "50 reels",
+    titulo: "100 reels",
     tecnica: "collage"
   },
 
