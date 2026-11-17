@@ -22,7 +22,7 @@
 const obras = [
     
   {
-    archivo: "arte/sé árbol y sé fruto",
+    archivo: "arte/sé árbol y sé fruto.jpg",
     fecha: "2026-11-16",
     titulo: "sé árbol y sé fruto",
     tecnica: "collage"
