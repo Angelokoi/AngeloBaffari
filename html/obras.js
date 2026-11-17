@@ -20,6 +20,14 @@
   },
 */
 const obras = [
+    
+  {
+    archivo: "arte/la importancia del lienzo.jpg",
+    fecha: "2026-11-16",
+    titulo: "La importancia del lienzo",
+    tecnica: "collage"
+  },
+
   
     {
     archivo: "arte/100 reels.jpg",
@@ -41,7 +49,7 @@ const obras = [
     archivo: "arte/solonecesitounangel.png",
     fecha: "2026-10-08",
     titulo: "Sólo necesito un ángel",
-    tecnica: "collage"
+    tecnica: "sobreimpresión"
   },
 
 
