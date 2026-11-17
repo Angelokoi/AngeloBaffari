@@ -22,6 +22,13 @@
 const obras = [
     
   {
+    archivo: "arte/sé árbol y sé fruto",
+    fecha: "2026-11-16",
+    titulo: "sé árbol y sé fruto",
+    tecnica: "collage"
+  },
+
+  {
     archivo: "arte/la importancia del lienzo.jpg",
     fecha: "2026-11-16",
     titulo: "La importancia del lienzo",
